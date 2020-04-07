@@ -4,13 +4,13 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    non_medical_ids = Contact.joins(:non_medical_reqs).where(non_medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.pluck(:id)
-    medical_ids = Contact.joins(:medical_reqs).where(medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.pluck(:id)
+    non_medical_ids = Contact.joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.pluck(:id)
+    medical_ids = Contact.joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.pluck(:id)
     unscoped_contacts = Contact.where(id: non_medical_ids + medical_ids).distinct
 
     @contacts = scope_access(unscoped_contacts)
     if current_user.phone_caller?
-      contacts_called_by_user_today = Contact.joins(:calls).where(calls: {user_id: current_user.id, created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day}).distinct
+      contacts_called_by_user_today = Contact.joins(:calls).where(calls: { user_id: current_user.id, created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day }).distinct
       @contacts = contacts_called_by_user_today
     end
 
@@ -18,32 +18,32 @@ class ContactsController < ApplicationController
       @non_medical_count = Contact.where(panchayat: current_user.panchayat).joins(:non_medical_reqs).distinct.count
       @medical_count = Contact.where(panchayat: current_user.panchayat).joins(:medical_reqs).distinct.count
 
-      @non_medical_count_remaining = Contact.where(panchayat: current_user.panchayat).joins(:non_medical_reqs).where(non_medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.count
-      @medical_count_remaining = Contact.where(panchayat: current_user.panchayat).joins(:medical_reqs).where(medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.count
+      @non_medical_count_remaining = Contact.where(panchayat: current_user.panchayat).joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
+      @medical_count_remaining = Contact.where(panchayat: current_user.panchayat).joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
     end
 
     if current_user.district_admin? or current_user.admin?
       @non_medical_count = Contact.joins(:non_medical_reqs).distinct.count
       @medical_count = Contact.joins(:medical_reqs).distinct.count
 
-      @non_medical_count_remaining = Contact.joins(:non_medical_reqs).where(non_medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.count
-      @medical_count_remaining = Contact.joins(:medical_reqs).where(medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.count
+      @non_medical_count_remaining = Contact.joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
+      @medical_count_remaining = Contact.joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
 
       panchayats = Panchayat.order(name: :asc)
-      @panchayats_data = panchayats.map {|p|
+      @panchayats_data = panchayats.map { |p|
         {
           name: p.name,
-          p_non_medical_count:  Contact.where(panchayat: p).joins(:non_medical_reqs).distinct.count,
-          p_medical_count:  Contact.where(panchayat: p).joins(:medical_reqs).distinct.count,
-          p_non_medical_count_remaining: Contact.where(panchayat: p).joins(:non_medical_reqs).where(non_medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.count,
-          p_medical_count_remaining:  Contact.where(panchayat: p ).joins(:medical_reqs).where(medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct.count
+          p_non_medical_count: Contact.where(panchayat: p).joins(:non_medical_reqs).distinct.count,
+          p_medical_count: Contact.where(panchayat: p).joins(:medical_reqs).distinct.count,
+          p_non_medical_count_remaining: Contact.where(panchayat: p).joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count,
+          p_medical_count_remaining: Contact.where(panchayat: p).joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
         }
       }
     end
 
     respond_to do |format|
       format.html
-      format.csv {send_data @contacts.to_csv, filename: "requests-#{Date.today}.csv"}
+      format.csv { send_data @contacts.to_csv, filename: "requests-#{Date.today}.csv" }
     end
   end
 
@@ -117,14 +117,15 @@ class ContactsController < ApplicationController
   end
 
   def generate_medical_reqs
-    unscoped_contacts = Contact.joins(:medical_reqs).where(medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct
+    unscoped_contacts = Contact.joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct
     contacts = scope_access(unscoped_contacts)
     respond_to do |format|
       format.csv { send_data contacts.to_medical_csv, filename: "users-#{Date.today}.csv" }
     end
   end
+
   def generate_non_medical_reqs
-    unscoped_contacts = Contact.joins(:non_medical_reqs).where(non_medical_reqs: {fullfilled: nil, not_able_type: nil}).distinct
+    unscoped_contacts = Contact.joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct
     contacts = scope_access(unscoped_contacts)
     respond_to do |format|
       format.csv { send_data contacts.to_non_medical_csv, filename: "users-#{Date.today}.csv" }
@@ -142,23 +143,24 @@ class ContactsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contact
-      @contact = Contact.find(params[:id])
-    end
 
-    def scope_access(contacts)
-      if current_user.admin?
-        contacts
-      elsif current_user.district_admin?
-        contacts
-      elsif current_user.panchayat_admin?
-        contacts.where(panchayat: current_user.panchayat)
-      end
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contact
+    @contact = Contact.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def contact_params
-      params.require(:contact).permit(:name, :phone, :gender, :age, :house_name, :ward, :landmark, :panchayat_id, :ration_type, :willing_to_pay, :number_of_family_members, :feedback, :user_id, :date_of_contact, :tracking_type)
+  def scope_access(contacts)
+    if current_user.admin?
+      contacts
+    elsif current_user.district_admin?
+      contacts
+    elsif current_user.panchayat_admin?
+      contacts.where(panchayat: current_user.panchayat)
     end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def contact_params
+    params.require(:contact).permit(:name, :phone, :gender, :dob, :age, :house_name, :alternate_contact, :ward, :landmark, :panchayat_id, :phc, :health_worker, :number_health_worker, :consultation_type, :user_id, :source, :old_case_id, :description)
+  end
 end

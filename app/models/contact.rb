@@ -1,7 +1,8 @@
 class Contact < ApplicationRecord
-  enum gender: {male: "male", female: "female"}
-  enum ration_type: {yellow: 'yellow', pink: 'pink', blue: 'blue', white: 'white'}
-  enum tracking_type: {international_passenger: 'international_passenger', domestic_passenger: 'domestic_passenger', other: "other"}
+  enum gender: { male: "male", female: "female" }
+  enum status: { pending: "pending", called: "called", not_reachable: "not_reachable" }
+  enum source: { deoc: "deoc", police: "police", private_hospital: "private_hospital", migrant_project: "migrant_project", medical_practitioner: "medical_practitioner" }
+  enum consultation_type: { doctor: "doctor", pharmacy: "pharmacy", nursing_need: "nursing_need", palliative_care: "palliative_care", others: "others" }
 
   belongs_to :panchayat
   has_many :non_medical_reqs
@@ -26,8 +27,8 @@ class Contact < ApplicationRecord
           contact.willing_to_pay ? 'Yes' : 'No',
           contact.ration_type,
           contact.number_of_family_members,
-          contact.non_medical_reqs.pluck(:requirement_type, :other_needs).map{ |req| "Need #{req[0]} (#{req[1]})" }.join(', '),
-          contact.medical_reqs.pluck(:requirement_type, :other_needs).map{ |req| "Need #{req[0]} (#{req[1]})" }.join(', ')
+          contact.non_medical_reqs.pluck(:requirement_type, :other_needs).map { |req| "Need #{req[0]} (#{req[1]})" }.join(', '),
+          contact.medical_reqs.pluck(:requirement_type, :other_needs).map { |req| "Need #{req[0]} (#{req[1]})" }.join(', ')
         ]
       end
     end
@@ -49,7 +50,7 @@ class Contact < ApplicationRecord
           contact.willing_to_pay ? 'Yes' : 'No',
           contact.ration_type,
           contact.number_of_family_members,
-          contact.non_medical_reqs.pluck(:requirement_type, :other_needs).map{ |req| "Need #{req[0]} (#{req[1]})" }.join(', '),
+          contact.non_medical_reqs.pluck(:requirement_type, :other_needs).map { |req| "Need #{req[0]} (#{req[1]})" }.join(', '),
         ]
       end
     end
@@ -71,7 +72,7 @@ class Contact < ApplicationRecord
           contact.willing_to_pay ? 'Yes' : 'No',
           contact.ration_type,
           contact.number_of_family_members,
-          contact.medical_reqs.pluck(:requirement_type, :other_needs).map{ |req| "#{req[0]} Medicine (#{req[1]})" }.join(', '),
+          contact.medical_reqs.pluck(:requirement_type, :other_needs).map { |req| "#{req[0]} Medicine (#{req[1]})" }.join(', '),
         ]
       end
     end

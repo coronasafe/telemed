@@ -38,12 +38,6 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.index ["symptoms_id"], name: "index_consultation_symptom_on_symptoms_id"
   end
 
-  create_table "consultation_types", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "consultations", force: :cascade do |t|
     t.text "reason_for_calling"
     t.text "other_details"
@@ -66,9 +60,11 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.string "reason"
     t.string "string"
     t.date "surveillance"
+    t.bigint "contacts_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actions_id"], name: "index_consultations_on_actions_id"
+    t.index ["contacts_id"], name: "index_consultations_on_contacts_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -83,21 +79,19 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "panchayat_id"
     t.string "alternate_contact"
-    t.string "nerby_phc"
+    t.string "phc"
     t.string "health_worker"
     t.string "number_health_worker"
     t.text "description"
     t.string "status"
     t.date "dob"
     t.string "old_case_id"
-    t.bigint "consultation_type_id"
-    t.bigint "source_id"
+    t.string "consultation_type"
+    t.string "source"
     t.bigint "assigned_to_id"
     t.index ["assigned_to_id"], name: "index_contacts_on_assigned_to_id"
-    t.index ["consultation_type_id"], name: "index_contacts_on_consultation_type_id"
     t.index ["panchayat_id"], name: "index_contacts_on_panchayat_id"
     t.index ["phone"], name: "index_contacts_on_phone", unique: true
-    t.index ["source_id"], name: "index_contacts_on_source_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -134,12 +128,6 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
 
   create_table "panchayats", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "sources", force: :cascade do |t|
-    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

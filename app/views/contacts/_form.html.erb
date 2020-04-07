@@ -1,35 +1,27 @@
 <section class="mt-8 max-w-lg">
-    <%= simple_form_for @contact, defaults: { input_html: {class: 'form-input mt-1 font-sans'}, wrapper_html: {class: 'flex flex-col my-4'}, label_html: {class: 'mb-1'}} do |f| %>
+  <%= simple_form_for @contact, defaults: { input_html: { class: 'form-input mt-1 font-sans' }, wrapper_html: { class: 'flex flex-col my-4' }, label_html: { class: 'mb-1' } } do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-    <%= f.input :name %>
-    <%= f.input :phone %>
-    <%= f.input :gender, input_html: {class: 'form-select'} %>
-    <%= f.input :age %>
-
-    <div>
-        <hr class="pb-4" />
-        <%= f.input :date_of_contact, label: 'Date of Arrival / Contact', as: :date, input_html: {class: 'form-select p-2 border'}%>
-        <%= f.input :tracking_type, input_html: {class: 'form-select'} %>
-    </div>
-
-    <div>
-        <hr class="pb-4" />
-        <%= f.input :house_name %>
-        <%= f.input :number_of_family_members %>
-        <%= f.input :ward %>
-        <%= f.input :landmark %>
-        <%= f.association :panchayat, collection: Panchayat.all(), input_html: {class: 'form-select', id: 'dropdown-choice-select'} %>
-    </div>
-
-    <div>
-        <hr class="pb-4" />
-        <%= f.input :ration_type, input_html: {class: 'form-select'} %>
-    </div>
+    <%= f.input :name, required: true, label: 'Enter Patient Name' %>
+    <%= f.input :dob, label: 'Date of Arrival / Contact', as: :date, input_html: { class: 'form-select p-2 border' }, as: :date, start_year: Date.today.year - 90, end_year: Date.today.year, required: true %>
+    <%= f.input :age, required: true %>
+    <%= f.input :phone, required: true, label: 'Enter the Whatsapp number of the patient' %>
+    <%= f.input :alternate_contact, label: 'Alternate contact number of the patient' %>
+    <%= f.input :gender, input_html: { class: 'form-select' }, required: true %>
+    <%= f.association :panchayat, collection: Panchayat.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
+    <%= f.input :ward %>
+    <%= f.input :landmark %>
+    <%= f.input :phc %>
+    <%= f.input :health_worker, label: 'Enter the name of health worker' %>
+    <%= f.input :number_health_worker, label: 'Enter the mobile number of health worker' %>
+    <%= f.input :consultation_type, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
+    <%= f.input :source, input_html: { class: 'form-select' }, required: true, label: 'Enter the source' %>
+    <%= f.input :old_case_id %>
+    <%= f.input :description, label: 'Notes (optional)' %>
 
     <span class="inline-flex rounded-md shadow-sm">
-        <%= f.button :submit, 'Submit Changes', 'data-turbolinks-scroll': false, class: 'mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition ease-in-out duration-150' %>
+        <%= f.button :submit, 'Submit Changes', 'data-turbolinks-scroll', class: 'mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition ease-in-out duration-150' %>
     </span>
-    <% end %>
+  <% end %>
 </section>

@@ -1,15 +1,5 @@
 class AddBasicTables < ActiveRecord::Migration[6.0]
   def change
-    create_table :consultation_types do |t|
-      t.string :title
-      t.timestamps
-    end
-
-    create_table :sources do |t|
-      t.string :title
-      t.timestamps
-    end
-
     create_table :doctors do |t|
       t.string :name
       t.references :users, null: false, foreign_key: true
@@ -28,24 +18,24 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
     end
 
     add_column :contacts, :alternate_contact, :string
-    add_column :contacts, :nerby_phc, :string
+    add_column :contacts, :phc, :string
     add_column :contacts, :health_worker, :string
     add_column :contacts, :number_health_worker, :string
     add_column :contacts, :description, :text
     add_column :contacts, :status, :string
     add_column :contacts, :dob, :date
     add_column :contacts, :old_case_id, :string
+    add_column :contacts, :consultation_type, :string
+    add_column :contacts, :source, :string
 
-    add_reference :contacts, :consultation_type, index: true
-    add_reference :contacts, :source, index: true
     add_reference :contacts, :assigned_to, index: true
 
-    remove_column :contacts, :willing_to_pay
-    remove_column :contacts, :ration_type
-    remove_column :contacts, :feedback
-    remove_column :contacts, :number_of_family_members
-    remove_column :contacts, :date_of_contact
-    remove_column :contacts, :tracking_type
+    remove_column :contacts, :willing_to_pay, :string
+    remove_column :contacts, :ration_type, :string
+    remove_column :contacts, :feedback, :string
+    remove_column :contacts, :number_of_family_members, :string
+    remove_column :contacts, :date_of_contact, :string
+    remove_column :contacts, :tracking_type, :string
 
 
     create_table :consultations do |t|
@@ -70,6 +60,7 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
       t.string :reason
       t.string :string
       t.date :surveillance
+      t.references :contacts, index: true
       t.timestamps
     end
 
