@@ -50,7 +50,7 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
       t.boolean :endemic, default: :false
       t.integer :family_members_count
       t.integer :elderly
-      t.integer :comorbidities
+      t.string :comorbidities
       t.boolean :prescription_given
       t.text :notes
       t.string :test_status
@@ -62,7 +62,7 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
       t.string :consultation_type
       t.string :status
       t.string :source
-      t.date :surveillance
+      t.string :surveillance
       t.references :contact, index: true
       t.references :doctor, index: true
       t.references :creator, index: true

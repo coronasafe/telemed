@@ -7,7 +7,6 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1
   def show
-    @last_call = @contact.calls.order("created_at").last
   end
 
   # GET /contacts/new
@@ -97,7 +96,9 @@ class ContactsController < ApplicationController
     if @contact
       redirect_to @contact
     else
-      redirect_to action: :new
+      @contact = Contact.new
+      @contact.phone = phone
+      render :new
     end
   end
 

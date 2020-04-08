@@ -1,184 +1,201 @@
-<div class="bg-white shadow overflow-hidiven  sm:rounded-lg max-w-3xl mx-auto">
-  <div class="px-4 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
-    <div class="w-full">
-      <div class="flex md:flex-row flex-col justify-between">
-        <div>
-          <div class="mt-4 text-3xl font-semibold">
-            #EKM <%= @contact.id %>
-          </div>
-          <div class="text-lg text-2xl font-medium text-gray-900">
-            <%= @contact.name.titleize %>,
-            <% if @contact.dob.present? %>
-              <%= @contact.age_from_dob %> Years
-            <% end %>
-          </div>
-        </div>
-        <div class="flex flex-col items-start md:items-end">
-          <div class="mt-4 text-3xl font-semibold">
-            <%= @consultation.status.titleize %>
-          </div>
-          <div class="text-lg text-2xl font-medium text-gray-900">
-            <%= @consultation.consultation_type.titleize %>
-          </div>
-        </div>
-
+<div class=" max-w-3xl mx-auto">
+  <div class="flex md:items-end justify-between flex-col md:flex-row ">
+    <div class="mt-4 text-xl md:text-4xl font-semibold">
+      Consultation Details
+    </div>
+    <div class="flex flex-col md:flex-row">
+      <div>
+        <%= link_to 'Update call summary', edit_consultation_path(@consultation), class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
-      <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-        Request was created by
-        <span class="font-bold"><%= @consultation.source %></span> <%= time_ago_in_words(@consultation.created_at) %>
-        ago
-      </p>
-      <% if @consultation.doctor_id.present? %>
-        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-          Assigned to
-          <span class="font-bold"><%= @consultation.doctor.name %></span>
-        </p>
-      <% end %>
+      <div>
+        <%= link_to 'History', edit_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+      </div>
     </div>
   </div>
-  <div class="px-4 py-5 sm:p-0">
-
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Reason for Calling
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <p>
-          <%= @consultation.reason_for_calling %>
+  <div class="bg-white shadow overflow-hidiven  rounded-lg mt-2 ">
+    <div class="px-4 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
+      <div class="w-full">
+        <div>
+          <div class="<%= "bg-#{@consultation.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold" %>">
+            <%= @consultation.action&.name %>
+          </div>
+        </div>
+        <div class="flex md:flex-row flex-col justify-between">
+          <div>
+            <div class="mt-4 text-3xl font-semibold">
+              #EKM <%= @contact.id %>
+            </div>
+            <div class="text-lg text-2xl font-medium text-gray-900">
+              <%= @contact.name.titleize %>,
+              <% if @contact.dob.present? %>
+                <%= @contact.age_from_dob %> Years
+              <% end %>
+            </div>
+          </div>
+          <div class="flex flex-col items-start md:items-end">
+            <div class="mt-4 text-3xl font-semibold">
+              <%= @consultation.status.titleize %>
+            </div>
+            <div class="text-lg text-2xl font-medium text-gray-900">
+              <%= @consultation.consultation_type.titleize %>
+            </div>
+          </div>
+        </div>
+        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+          Request was created by
+          <span class="font-bold"><%= @consultation.source %></span> <%= time_ago_in_words(@consultation.created_at) %>
+          ago
         </p>
-      </div>
-    </div>
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Symptoms
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <% @consultation.symptoms.map do |s| %>
-            <span class="py-1 px-2 mr-2 bg-yellow-100 rounded">
-            <%= s.name %>
-            </span>
+        <% if @consultation.doctor_id.present? %>
+          <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+            Assigned to
+            <span class="font-bold"><%= @consultation.doctor.name %></span>
+          </p>
         <% end %>
       </div>
     </div>
-    <% if @consultation.other_details %>
-      <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
+    <div class="px-4 py-5 sm:p-0">
+
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5">
         <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-          Other Symptoms
+          Reason for Calling
         </div>
         <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-          <%= @consultation.other_details %>
+          <p>
+            <%= @consultation.reason_for_calling %>
+          </p>
         </div>
       </div>
-    <% end %>
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Symptoms
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <% @consultation.symptoms.map do |s| %>
+            <span class="py-1 px-2 mr-2 bg-yellow-100 rounded">
+            <%= s.name %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+      <% if @consultation.other_details %>
+        <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+          <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+            Other Symptoms
+          </div>
+          <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+            <%= @consultation.other_details %>
+          </div>
+        </div>
+      <% end %>
 
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Current Condition
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <ul>
+            <li class="my-2"><span class="font-bold">Status:</span> <span><%= @consultation.current_status %></span>
+            </li>
+            <li class="my-2"><span class="font-bold">Category: </span><span><%= @consultation.category %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Quarantined: </span><span><%= @consultation.quarantined_on.blank? ? "No" : "Yes #{time_ago_in_words(@consultation.quarantined_on)}" %></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Family Details
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <ul>
+            <li class="my-2"><span class="font-bold">Total Family Members:</span>
+              <span><%= @consultation.family_members_count %></span></li>
+            <li class="my-2"><span class="font-bold">Elderly: </span><span><%= @consultation.elderly %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Quarantined
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <p>
+            <%= @consultation.quarantined_on.blank? ? "No" : "Yes #{time_ago_in_words(@consultation.quarantined_on)}" %>
+          </p>
+        </div>
+      </div>
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Prescription Given
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <p>
+            <%= @consultation.prescription_given ? "Yes" : "NO" %>
+          </p>
+        </div>
+      </div>
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Sample Details
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <ul>
+            <li class="my-2"><span class="font-bold">Test status:</span>
+              <span><%= @consultation.test_status %></span></li>
+            <li class="my-2">
+              <span class="font-bold">sample taken on: </span><span><%= @consultation.sample_taken_on %></span></li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Current Condition
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Shifted
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <ul>
+            <li class="my-2"><span class="font-bold">Shifted From:</span><span><%= @consultation.shift_from %></span>
+            </li>
+            <li class="my-2"><span class="font-bold">Shifted to </span><span><%= @consultation.shift_to %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Reason: </span><span><%= @consultation.reason %></span></li>
+            <!--          <li class="my-2">-->
+            <!--            <span class="font-bold">Transaction Medium: </span><span><%#= @consultation.transaction %></span></li>-->
+          </ul>
+        </div>
       </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <ul>
-          <li class="my-2"><span class="font-bold">Status:</span> <span><%= @consultation.current_status %></span></li>
-          <li class="my-2"><span class="font-bold">Category: </span><span><%= @consultation.category %></span></li>
-          <li class="my-2">
-            <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
-          <li class="my-2">
-            <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
-          <li class="my-2">
-            <span class="font-bold">Quarantined: </span><span><%= @consultation.quarantined_on.blank? ? "No" : "Yes #{time_ago_in_words(@consultation.quarantined_on)}" %></span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Family Details
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <ul>
-          <li class="my-2"><span class="font-bold">Total Family Members:</span>
-            <span><%= @consultation.family_members_count %></span></li>
-          <li class="my-2"><span class="font-bold">Elderly: </span><span><%= @consultation.elderly %></span></li>
-          <li class="my-2">
-            <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
-          <li class="my-2">
-            <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Quarantined
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <p>
-          <%= @consultation.quarantined_on.blank? ? "No" : "Yes #{time_ago_in_words(@consultation.quarantined_on)}" %>
-        </p>
-      </div>
-    </div>
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Prescription Given
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <p>
-          <%= @consultation.prescription_given ? "Yes" : "NO" %>
-        </p>
-      </div>
-    </div>
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Sample Details
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <ul>
-          <li class="my-2"><span class="font-bold">Test status:</span>
-            <span><%= @consultation.test_status %></span></li>
-          <li class="my-2">
-            <span class="font-bold">sample taken on: </span><span><%= @consultation.sample_taken_on %></span></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Shifted
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Surveillance
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <p>
+            <%= @consultation.surveillance %>
+          </p>
+        </div>
       </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <ul>
-          <li class="my-2"><span class="font-bold">Shifted From:</span><span><%= @consultation.shift_from %></span></li>
-          <li class="my-2"><span class="font-bold">Shifted to </span><span><%= @consultation.shift_to %></span></li>
-          <li class="my-2">
-            <span class="font-bold">Reason: </span><span><%= @consultation.reason %></span></li>
-<!--          <li class="my-2">-->
-<!--            <span class="font-bold">Transaction Medium: </span><span><%#= @consultation.transaction %></span></li>-->
-        </ul>
+
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Notes
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <p>
+            <%= @consultation.notes %>
+          </p>
+        </div>
       </div>
     </div>
-
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Surveillance
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <p>
-          <%= @consultation.surveillance %>
-        </p>
-      </div>
-    </div>
-
-    <div class="flex md:flex-row flex-col sm:px-6 sm:py-5">
-      <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
-        Notes
-      </div>
-      <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
-        <p>
-          <%= @consultation.notes %>
-        </p>
-      </div>
-    </div>
-
   </div>
 </div>
-
-<!--  :action_id, :shift_from, :shift_to, :reason,

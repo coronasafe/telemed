@@ -1,0 +1,71 @@
+<div class="bg-white shadow overflow-hidiven  sm:rounded-lg max-w-3xl mx-auto">
+  <div class="px-6 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
+    <div class="mt-4 text-3xl font-semibold">
+      Update Consultation Details
+    </div>
+  </div>
+  <div class="px-6 py-4 max-w-2xl mx-auto">
+    <section class="mt-8">
+      <%= simple_form_for @consultation, defaults: { input_html: { class: 'form-input mt-1 font-sans' }, wrapper_html: { class: 'flex flex-col my-4' }, label_html: { class: 'mb-1' } } do |f| %>
+        <%= f.error_notification %>
+        <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+        <%= f.input :reason_for_calling, required: true, label: 'Reason for calling' %>
+        <%= f.association :symptoms, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
+        <%= f.input :other_details, required: false, label: 'Other Symptoms (optional)' %>
+        <div class="mt-4 text-xl font-semibold">
+          Current Status
+        </div>
+        <div class="flex justify-between flex-col md:flex-row">
+          <%= f.input :current_status, required: true, label: 'Current Status of the Patient', input_html: { class: 'form-select' } %>
+          <%= f.input :category, required: true, label: 'Category of the Patient', input_html: { class: 'form-select' } %>
+        </div>
+        <div class="flex justify-between flex-col md:flex-row">
+          <%= f.input :antenatal, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Is the patient antenatal?' %>
+          <%= f.input :endemic, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Is the patient from an endemic area?' %>
+        </div>
+        <%= f.input :quarantined, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Is the patient Quarantined?' %>
+        <div class="mt-4 text-xl font-semibold">
+          Family Details
+        </div>
+        <div class="flex justify-between flex-col md:flex-row">
+          <%= f.input :family_members_count, label: 'Number of family members', input_html: { class: 'form-select' } %>
+          <%= f.input :elderly, label: 'Number of elderly patients', input_html: { class: 'form-select' } %>
+        </div>
+        <%= f.input :comorbidities, label: 'Cormorbidities', input_html: { class: 'form-select' } %>
+
+        <div class="mt-4 text-xl font-semibold">
+          Test Details
+        </div>
+        <%= f.input :test_status, required: false, label: 'Test Status', input_html: { class: 'form-select' } %>
+
+        <div class="mt-4 text-xl font-semibold">
+          Shifting Details
+        </div>
+        <div class="flex justify-between flex-col md:flex-row">
+          <%= f.input :shift_from, label: 'Shifting from' %>
+          <%= f.input :shift_to, label: 'Shifting to' %>
+        </div>
+        <%= f.input :reason, label: 'Reason for shifting' %>
+
+        <div class="mt-4 text-xl font-semibold">
+          Other Details
+        </div>
+        <%= f.input :prescription_given, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Are you giving any prescription' %>
+        <%= f.input :surveillance, required: false, label: 'surveillance (optional)' %>
+        <%= f.input :consultation_type, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
+        <%= f.input :source, input_html: { class: 'form-select' }, required: true, label: 'Enter the source' %>
+        <%= f.input :notes, required: false, label: 'Notes (optional)' %>
+        <%= f.input :status, input_html: { class: 'form-select' }, required: true, label: 'Consultation Status' %>
+        <%= f.association :action, collection: Action.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
+        <%#= f.association :action, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
+        <div class="mt-4">
+          <div class="flex">
+            <%= f.button :submit, 'Save Call Summary', class: 'cursor-pointer  mr-2 px-4 inline-flex items-center px-3 py-3 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150' %>
+            <%= link_to 'Cancel', consultation_path(@consultation), class: 'cursor-pointer inline-flex items-center px-3 py-3 border border-transparent text-sm leading-4 font-medium rounded-md text-white  bg-gray-300 text-gray-900 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150' %>
+          </div>
+        </div>
+        </span>
+      <% end %>
+    </section>
+  </div>
+</div>

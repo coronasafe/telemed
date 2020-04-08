@@ -12,9 +12,8 @@ Rails.application.routes.draw do
     get :generate_non_medical_reqs, on: :collection
     get :generate_medical_reqs, on: :collection
 
-    resources :consultations do
-      
-    end
+
+    resources :consultations, only: %w[create]
 
     resources :non_medical_reqs do
       get :fullfill, on: :member
@@ -25,4 +24,8 @@ Rails.application.routes.draw do
       get :not_able, on: :member
     end
   end
+
+  resources :consultations do
+  end
+
 end

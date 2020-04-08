@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.boolean "endemic", default: false
     t.integer "family_members_count"
     t.integer "elderly"
-    t.integer "comorbidities"
+    t.string "comorbidities"
     t.boolean "prescription_given"
     t.text "notes"
     t.string "test_status"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.string "consultation_type"
     t.string "status"
     t.string "source"
-    t.date "surveillance"
+    t.string "surveillance"
     t.bigint "contact_id"
     t.bigint "doctor_id"
     t.bigint "creator_id"
