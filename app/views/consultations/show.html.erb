@@ -8,7 +8,7 @@
         <%= link_to 'Update call summary', edit_consultation_path(@consultation), class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
       <div>
-        <%= link_to 'History', edit_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+        <%= link_to 'History', contact_path(@contact), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
     </div>
   </div>
@@ -30,6 +30,9 @@
               <% if @contact.dob.present? %>
                 <%= @contact.age_from_dob %> Years
               <% end %>
+              <div>
+                <%= @contact.phone %>
+              </div>
             </div>
           </div>
           <div class="flex flex-col items-start md:items-end">
@@ -46,6 +49,13 @@
           <span class="font-bold"><%= @consultation.source %></span> <%= time_ago_in_words(@consultation.created_at) %>
           ago
         </p>
+        <% if @consultation.created_at != @consultation.updated_at %>
+          <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+            Request was last updated at
+            <%= time_ago_in_words(@consultation.updated_at) %>
+            ago
+          </p>
+        <% end %>
         <% if @consultation.doctor_id.present? %>
           <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
             Assigned to
@@ -117,10 +127,8 @@
             <li class="my-2"><span class="font-bold">Total Family Members:</span>
               <span><%= @consultation.family_members_count %></span></li>
             <li class="my-2"><span class="font-bold">Elderly: </span><span><%= @consultation.elderly %></span></li>
-            <li class="my-2">
-              <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
-            <li class="my-2">
-              <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
+            <li class="my-2"><span class="font-bold">Comorbidities:</span>
+              <span><%= @consultation.comorbidities %></span></li>
           </ul>
         </div>
       </div>
@@ -164,9 +172,9 @@
         </div>
         <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
           <ul>
-            <li class="my-2"><span class="font-bold">Shifted From:</span><span><%= @consultation.shift_from %></span>
+            <li class="my-2"><span class="font-bold">Shifted From: </span><span><%= @consultation.shift_from %></span>
             </li>
-            <li class="my-2"><span class="font-bold">Shifted to </span><span><%= @consultation.shift_to %></span></li>
+            <li class="my-2"><span class="font-bold">Shifted to: </span><span><%= @consultation.shift_to %></span></li>
             <li class="my-2">
               <span class="font-bold">Reason: </span><span><%= @consultation.reason %></span></li>
             <!--          <li class="my-2">-->

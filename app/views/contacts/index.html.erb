@@ -116,18 +116,20 @@
               Name
             </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Consultation Type
+              Consultation
             </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Requested
             </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Action to be taken
+              Action
             </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              view
+            </th>
           </tr>
           </thead>
           <tbody class="bg-white">
@@ -153,7 +155,14 @@
               <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <%= c.status %>
               </td>
-
+              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                <span>
+                  <%= link_to 'View', edit_consultation_path(c), class: 'mr-2 font-medium' %>
+                </span>
+                <span>
+                  <%= link_to 'History', contact_path(c.contact), class: 'mr-2 font-medium' %>
+                </span>
+              </td>
             </tr>
           <% end %>
           </tbody>
