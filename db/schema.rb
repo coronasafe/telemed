@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.integer "comorbidities"
     t.boolean "prescription_given"
     t.text "notes"
-    t.string "tested"
+    t.string "test_status"
     t.date "sample_taken_on"
     t.bigint "action_id"
     t.string "shift_from"
@@ -103,6 +103,12 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.index ["phone"], name: "index_contacts_on_phone", unique: true
   end
 
+  create_table "districts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "doctors", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id", null: false
@@ -139,6 +145,8 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "district_id"
+    t.index ["district_id"], name: "index_panchayats_on_district_id"
   end
 
   create_table "symptoms", force: :cascade do |t|

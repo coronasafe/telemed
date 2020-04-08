@@ -17,6 +17,11 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    create_table :districts do |t|
+      t.string :name
+      t.timestamps
+    end
+
     add_column :contacts, :alternate_contact, :string
     add_column :contacts, :phc, :string
     add_column :contacts, :health_worker, :string
@@ -24,6 +29,7 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
     add_column :contacts, :description, :text
     add_column :contacts, :dob, :date
     add_column :contacts, :old_case_id, :string
+    add_reference :panchayats, :district, index: true
 
     remove_column :contacts, :willing_to_pay, :string
     remove_column :contacts, :ration_type, :string
@@ -47,7 +53,7 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
       t.integer :comorbidities
       t.boolean :prescription_given
       t.text :notes
-      t.string :tested
+      t.string :test_status
       t.date :sample_taken_on
       t.references :action, index: true
       t.string :shift_from

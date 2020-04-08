@@ -46,7 +46,7 @@ class ConsultationsController < ApplicationController
   def consultation_update_params
     params.require(:consultation).permit(:consultation_type, :source, :reason_for_calling, :other_details,
       :current_status, :category, :antenatal, :quarantined, :quarantined_on, :endemic,
-      :family_members_count, :elderly, :comorbidities, :prescription_given, :notes, :tested, :sample_taken_on,
+      :family_members_count, :elderly, :comorbidities, :prescription_given, :notes, :test_status, :sample_taken_on,
       :action_id, :shift_from, :shift_to, :reason, :status, :surveillance, :contact_id, :doctor_id
     )
   end
