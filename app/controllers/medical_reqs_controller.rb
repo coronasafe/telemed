@@ -1,8 +1,8 @@
 class MedicalReqsController < ApplicationController
-def create
+  def create
     @contact = Contact.find(params[:contact_id])
     @medical_req = @contact.medical_reqs.create(medical_req_params)
-   # @medical_req.user_id = current_user.id
+    # @medical_req.user_id = current_user.id
 
     if @medical_req.save
       respond_to do |format|

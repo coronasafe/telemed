@@ -1,0 +1,130 @@
+<div class="bg-white shadow overflow-hidden  sm:rounded-lg max-w-3xl mx-auto">
+  <div class="px-4 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
+    <div class="w-full">
+      <div class="flex md:flex-row flex-col justify-between">
+        <div>
+          <div class="mt-4 text-3xl font-semibold">
+            #EKM <%= @contact.id %>
+          </div>
+          <div class="text-lg text-2xl font-medium text-gray-900">
+            <%= @contact.name.titleize %>,
+            <% if @contact.dob.present? %>
+              <%= @contact.age_from_dob %> Years
+            <% end %>
+          </div>
+        </div>
+        <div class="flex flex-col items-start md:items-end">
+          <div class="mt-4 text-3xl font-semibold">
+            <%= @consultation.status.titleize %>
+          </div>
+          <div class="text-lg text-2xl font-medium text-gray-900">
+            <%= @consultation.consultation_type.titleize %>
+          </div>
+        </div>
+
+      </div>
+      <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+        Request was created by
+        <span class="font-bold"><%= @consultation.source %></span> <%= time_ago_in_words(@consultation.created_at) %>
+        ago
+      </p>
+    </div>
+  </div>
+
+  <!--   :, :other_details,-->
+  <!--  :current_status, :category, :antenatal, :quarantined, :quarantined_on, :endemic,-->
+  <!--  :family_members_count, :elderly, :comorbidities, :prescription_given, :notes, :tested, :sample_taken_on,-->
+  <!--  :action_id, :shift_from, :shift_to, :reason, :status, :surveillance, :contact_id, :doctor_id-->
+  <div class="px-4 py-5 sm:p-0">
+    <dl>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Reason for Calling
+        </dt>
+        <dd class="mt-1 text-sm flex flex-col leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <p>
+            <%= @consultation.reason_for_calling %>
+          </p>
+        </dd>
+      </div>
+      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          WhatsApp Number, Click to Call
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= link_to @contact.phone, "tel:#{@contact.phone}" %>
+        </dd>
+      </div>
+      <% if @contact.alternate_contact.present? %>
+        <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Alternate Contact Number
+          </dt>
+          <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+            <%= @contact.alternate_contact %>
+          </dd>
+        </div>
+      <% end %>
+      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Last Called
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <% if @last_call %>
+            Called <span class="font-bold"><%= time_ago_in_words(@last_call.created_at) %></span> ago,
+            by <%= @last_call.user.email %>
+          <% else %>
+            Not called yet
+          <% end %>
+
+        </dd>
+      </div>
+      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Date of Birth
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <% if @contact.dob.present? %>
+            <%= @contact.dob.to_s(:long) %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Age / Gender
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <%= @contact.gender.to_s.capitalize() %>, <%= @contact.age %> years old
+        </dd>
+      </div>
+      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Address
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <ul>
+            <li class="my-2"><span class="font-bold">House:</span> <span><%= @contact.house_name %></span></li>
+            <li class="my-2"><span class="font-bold">Ward: </span><%= @contact.ward %></span></li>
+            <li class="my-2"><span class="font-bold">Panchayat: </span><%= @contact.panchayat.name %></span></li>
+            <li class="my-2"><span class="font-bold">Landmark: </span><%= @contact.landmark %></span></li>
+          </ul>
+        </dd>
+      </div>
+
+      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Health Care Worker Details
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+          <ul>
+            <li class="my-2"><span class="font-bold">PHC:</span> <span><%= @contact.phc %></span></li>
+            <li class="my-2"><span class="font-bold">Name of health worker: </span><%= @contact.health_worker %></span>
+            </li>
+            <li class="my-2">
+              <span class="font-bold">Mobile health worker: </span><%= @contact.number_health_worker %></span></li>
+          </ul>
+        </dd>
+      </div>
+  </div>
+</div>
+

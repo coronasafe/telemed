@@ -2,7 +2,7 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
   def change
     create_table :doctors do |t|
       t.string :name
-      t.references :users, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
       t.timestamps
     end
 
@@ -22,13 +22,8 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
     add_column :contacts, :health_worker, :string
     add_column :contacts, :number_health_worker, :string
     add_column :contacts, :description, :text
-    add_column :contacts, :status, :string
     add_column :contacts, :dob, :date
     add_column :contacts, :old_case_id, :string
-    add_column :contacts, :consultation_type, :string
-    add_column :contacts, :source, :string
-
-    add_reference :contacts, :assigned_to, index: true
 
     remove_column :contacts, :willing_to_pay, :string
     remove_column :contacts, :ration_type, :string
@@ -54,19 +49,29 @@ class AddBasicTables < ActiveRecord::Migration[6.0]
       t.text :notes
       t.string :tested
       t.date :sample_taken_on
-      t.references :actions, index: true
+      t.references :action, index: true
       t.string :shift_from
       t.string :shift_to
       t.string :reason
-      t.string :string
+      t.string :consultation_type
+      t.string :status
+      t.string :source
       t.date :surveillance
-      t.references :contacts, index: true
+      t.references :contact, index: true
+      t.references :doctor, index: true
+      t.references :creator, index: true
       t.timestamps
     end
 
-    create_table :consultation_symptom do |t|
-      t.references :consultations, index: true
-      t.references :symptoms
+    create_table :consultation_symptoms do |t|
+      t.references :consultation, index: true
+      t.references :symptom
+    end
+
+    create_table :consultation_versions do |t|
+      t.references :consultation, index: true
+      t.text :change
+      t.references :user, index: true
     end
   end
 end

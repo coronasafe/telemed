@@ -2,53 +2,10 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :edit, :update, :destroy, :make_call]
 
   # GET /contacts
-  # GET /contacts.json
   def index
-    non_medical_ids = Contact.joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.pluck(:id)
-    medical_ids = Contact.joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.pluck(:id)
-    unscoped_contacts = Contact.where(id: non_medical_ids + medical_ids).distinct
-
-    @contacts = scope_access(unscoped_contacts)
-    if current_user.phone_caller?
-      contacts_called_by_user_today = Contact.joins(:calls).where(calls: { user_id: current_user.id, created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day }).distinct
-      @contacts = contacts_called_by_user_today
-    end
-
-    if current_user.panchayat_admin?
-      @non_medical_count = Contact.where(panchayat: current_user.panchayat).joins(:non_medical_reqs).distinct.count
-      @medical_count = Contact.where(panchayat: current_user.panchayat).joins(:medical_reqs).distinct.count
-
-      @non_medical_count_remaining = Contact.where(panchayat: current_user.panchayat).joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
-      @medical_count_remaining = Contact.where(panchayat: current_user.panchayat).joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
-    end
-
-    if current_user.district_admin? or current_user.admin?
-      @non_medical_count = Contact.joins(:non_medical_reqs).distinct.count
-      @medical_count = Contact.joins(:medical_reqs).distinct.count
-
-      @non_medical_count_remaining = Contact.joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
-      @medical_count_remaining = Contact.joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
-
-      panchayats = Panchayat.order(name: :asc)
-      @panchayats_data = panchayats.map { |p|
-        {
-          name: p.name,
-          p_non_medical_count: Contact.where(panchayat: p).joins(:non_medical_reqs).distinct.count,
-          p_medical_count: Contact.where(panchayat: p).joins(:medical_reqs).distinct.count,
-          p_non_medical_count_remaining: Contact.where(panchayat: p).joins(:non_medical_reqs).where(non_medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count,
-          p_medical_count_remaining: Contact.where(panchayat: p).joins(:medical_reqs).where(medical_reqs: { fullfilled: nil, not_able_type: nil }).distinct.count
-        }
-      }
-    end
-
-    respond_to do |format|
-      format.html
-      format.csv { send_data @contacts.to_csv, filename: "requests-#{Date.today}.csv" }
-    end
   end
 
   # GET /contacts/1
-  # GET /contacts/1.json
   def show
     @last_call = @contact.calls.order("created_at").last
   end
@@ -69,10 +26,12 @@ class ContactsController < ApplicationController
 
     existing_contact = Contact.find_by(phone: contact_params["phone"].squish)
     if existing_contact
+      create_consultation(existing_contact)
       redirect_to existing_contact
     else
       respond_to do |format|
-        if @contact.save
+        if @contact.save!
+          create_consultation(@contact)
           format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
           format.json { render :show, status: :created, location: @contact }
         else
@@ -151,7 +110,7 @@ class ContactsController < ApplicationController
 
   def scope_access(contacts)
     if current_user.admin?
-      contacts
+      consultations.all
     elsif current_user.district_admin?
       contacts
     elsif current_user.panchayat_admin?
@@ -159,8 +118,15 @@ class ContactsController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
+  def create_consultation(contact)
+    contact.consultations.create!(consultation_params)
+  end
+
   def contact_params
-    params.require(:contact).permit(:name, :phone, :gender, :dob, :age, :house_name, :alternate_contact, :ward, :landmark, :panchayat_id, :phc, :health_worker, :number_health_worker, :consultation_type, :user_id, :source, :old_case_id, :description)
+    params.require(:contact).permit(:name, :phone, :gender, :dob, :age, :house_name, :alternate_contact, :ward, :landmark, :panchayat_id, :phc, :health_worker, :number_health_worker, :user_id, :old_case_id, :description)
+  end
+
+  def consultation_params
+    params.require(:contact).permit(:consultation_type, :source).merge(status: 'pending', creator_id: current_user.id)
   end
 end

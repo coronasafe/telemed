@@ -1,15 +1,22 @@
 class Contact < ApplicationRecord
   enum gender: { male: "male", female: "female" }
-  enum status: { pending: "pending", called: "called", not_reachable: "not_reachable" }
-  enum source: { deoc: "deoc", police: "police", private_hospital: "private_hospital", migrant_project: "migrant_project", medical_practitioner: "medical_practitioner" }
-  enum consultation_type: { doctor: "doctor", pharmacy: "pharmacy", nursing_need: "nursing_need", palliative_care: "palliative_care", others: "others" }
 
   belongs_to :panchayat
+  has_many :consultations
+
+  attr_accessor :consultation_type
+  attr_accessor :source
+
   has_many :non_medical_reqs
   has_many :medical_reqs
 
   has_many :calls
   has_many :callees, through: :calls, source: :user
+
+  def age_from_dob
+    now = Time.zone.now.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
 
   def self.to_csv
     attributes = %w{name phone house_name ward panchayat to_pay card_color family_members non_medical_needs medical_needs}

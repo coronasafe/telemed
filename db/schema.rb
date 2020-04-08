@@ -31,11 +31,19 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.index ["user_id"], name: "index_calls_on_user_id"
   end
 
-  create_table "consultation_symptom", force: :cascade do |t|
-    t.bigint "consultations_id"
-    t.bigint "symptoms_id"
-    t.index ["consultations_id"], name: "index_consultation_symptom_on_consultations_id"
-    t.index ["symptoms_id"], name: "index_consultation_symptom_on_symptoms_id"
+  create_table "consultation_symptoms", force: :cascade do |t|
+    t.bigint "consultation_id"
+    t.bigint "symptom_id"
+    t.index ["consultation_id"], name: "index_consultation_symptoms_on_consultation_id"
+    t.index ["symptom_id"], name: "index_consultation_symptoms_on_symptom_id"
+  end
+
+  create_table "consultation_versions", force: :cascade do |t|
+    t.bigint "consultation_id"
+    t.text "change"
+    t.bigint "user_id"
+    t.index ["consultation_id"], name: "index_consultation_versions_on_consultation_id"
+    t.index ["user_id"], name: "index_consultation_versions_on_user_id"
   end
 
   create_table "consultations", force: :cascade do |t|
@@ -54,17 +62,23 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.text "notes"
     t.string "tested"
     t.date "sample_taken_on"
-    t.bigint "actions_id"
+    t.bigint "action_id"
     t.string "shift_from"
     t.string "shift_to"
     t.string "reason"
-    t.string "string"
+    t.string "consultation_type"
+    t.string "status"
+    t.string "source"
     t.date "surveillance"
-    t.bigint "contacts_id"
+    t.bigint "contact_id"
+    t.bigint "doctor_id"
+    t.bigint "creator_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["actions_id"], name: "index_consultations_on_actions_id"
-    t.index ["contacts_id"], name: "index_consultations_on_contacts_id"
+    t.index ["action_id"], name: "index_consultations_on_action_id"
+    t.index ["contact_id"], name: "index_consultations_on_contact_id"
+    t.index ["creator_id"], name: "index_consultations_on_creator_id"
+    t.index ["doctor_id"], name: "index_consultations_on_doctor_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -83,23 +97,18 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.string "health_worker"
     t.string "number_health_worker"
     t.text "description"
-    t.string "status"
     t.date "dob"
     t.string "old_case_id"
-    t.string "consultation_type"
-    t.string "source"
-    t.bigint "assigned_to_id"
-    t.index ["assigned_to_id"], name: "index_contacts_on_assigned_to_id"
     t.index ["panchayat_id"], name: "index_contacts_on_panchayat_id"
     t.index ["phone"], name: "index_contacts_on_phone", unique: true
   end
 
   create_table "doctors", force: :cascade do |t|
     t.string "name"
-    t.bigint "users_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["users_id"], name: "index_doctors_on_users_id"
+    t.index ["user_id"], name: "index_doctors_on_user_id"
   end
 
   create_table "medical_reqs", force: :cascade do |t|
@@ -155,7 +164,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
 
   add_foreign_key "calls", "contacts"
   add_foreign_key "calls", "users"
-  add_foreign_key "doctors", "users", column: "users_id"
+  add_foreign_key "doctors", "users"
   add_foreign_key "medical_reqs", "contacts"
   add_foreign_key "non_medical_reqs", "contacts"
 end

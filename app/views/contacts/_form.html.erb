@@ -15,13 +15,13 @@
     <%= f.input :phc %>
     <%= f.input :health_worker, label: 'Enter the name of health worker' %>
     <%= f.input :number_health_worker, label: 'Enter the mobile number of health worker' %>
-    <%= f.input :consultation_type, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
-    <%= f.input :source, input_html: { class: 'form-select' }, required: true, label: 'Enter the source' %>
+    <%= f.input :consultation_type, collection: Consultation.consultation_types, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
+    <%= f.input :source, collection: Consultation.sources, input_html: { class: 'form-select' }, required: true, label: 'Enter the source' %>
     <%= f.input :old_case_id %>
     <%= f.input :description, label: 'Notes (optional)' %>
 
     <span class="inline-flex rounded-md shadow-sm">
-        <%= f.button :submit, 'Submit Changes', 'data-turbolinks-scroll', class: 'mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition ease-in-out duration-150' %>
+        <%= f.button :submit, class: 'mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition ease-in-out duration-150' %>
     </span>
   <% end %>
 </section>
