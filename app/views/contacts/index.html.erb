@@ -103,14 +103,16 @@
 <% end %>
 <div>
   <%= simple_form_for :search, url: root_path, method: "GET" do |f| %>
-    <%= f.input :from_date, label: 'Actions', class: 'flex', input_html: { class: 'flex form-select' }, as: :date, required: false %>
-    <%= f.input :to_date, label: 'Actions', class: 'flex', input_html: { class: 'flex form-select' }, as: :date, required: false %>
-    <div class="flex justify-between flex-col md:flex-row">
-      <%= f.input :actions, label: 'Actions', input_html: { class: 'flex form-select' }, collection: Action.all, required: false %>
-      <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select' }, collection: Consultation.categories, required: false %>
-      <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select' }, collection: Consultation.test_statuses, required: false %>
-      <%= f.input :others, label: '', input_html: { class: 'flex form-select' }, collection: ['ANC', 'Shifted To Hospital', 'Prescription Given'], required: false %>
-      <%#= f.input :category, label: "Flavor", collection: flavors, as: :check_boxes %>
+
+    <div class="flex">
+      <%= f.input :start_date, label: 'From', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.start_date.to_s }, as: :date, default: Date.today, required: false %>
+      <%= f.input :end_date, label: 'To', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.end_date.to_s }, as: :date, default: Date.today, required: false %>
+    </div>
+    <div class="flex mt-4 flex-col md:flex-row">
+      <%= f.input :actions, label: 'Actions', input_html: { class: 'flex form-select mr-4' }, collection: Action.all, required: false %>
+      <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories, required: false %>
+      <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.test_statuses, required: false %>
+      <%= f.input :others, label: '', input_html: { class: 'flex form-select mr-4' }, collection: ['ANC', 'Shifted To Hospital', 'Prescription Given'], required: false %>
     </div>
     <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
 
@@ -119,75 +121,82 @@
 </div>
 
 <% if current_user.panchayat_admin? or current_user.phone_caller? %>
-  <div class="mt-4 flex flex-col">
-    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-        <table class="min-w-full">
-          <thead>
-          <tr>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              ID
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Name
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Consultation
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Requested
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Action
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Status
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              view
-            </th>
-          </tr>
-          </thead>
-          <tbody class="bg-white">
-          <% presenter.consultations.each do |c| %>
-            <tr class="hover:text-gray-100 cursor-pointer">
-              <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
-                <%= link_to "EKM#{c.contact.id}", consultation_path(c) %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= c.contact.name %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= c.consultation_type %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= time_ago_in_words(c.created_at) %> ago
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <div class="flex flex-col items-start">
-                  <% c.followups.where(completed_by: nil).each do |f| %>
-                    <div class="<%= "bg-#{f.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
-                      <%= f.action&.name %>
-                    </div>
-                  <% end %>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= c.status %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+  <% if presenter.consultations.blank? %>
+    <div class="mt-4 text-xl font-semibold px-4 py-6 bg-white shadow rounded">
+      Noting to show, Please try changing the filters
+    </div>
+  <% else %>
+
+    <div class="mt-4 flex flex-col">
+      <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+          <table class="min-w-full">
+            <thead>
+            <tr>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Consultation
+              </th>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Requested
+              </th>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Action
+              </th>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                view
+              </th>
+            </tr>
+            </thead>
+            <tbody class="bg-white">
+            <% presenter.consultations.each do |c| %>
+              <tr class="hover:text-gray-100 cursor-pointer">
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
+                  <%= link_to "EKM#{c.contact.id}", consultation_path(c) %>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                  <%= c.contact.name %>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                  <%= c.consultation_type %>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                  <%= time_ago_in_words(c.created_at) %> ago
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                  <div class="flex flex-col items-start">
+                    <% c.followups.where(completed_by: nil).each do |f| %>
+                      <div class="<%= "bg-#{f.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
+                        <%= f.action&.name %>
+                      </div>
+                    <% end %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                  <%= c.status %>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <span>
                   <%= link_to 'View', consultation_path(c), class: 'mr-2 font-medium' %>
                 </span>
-                <span>
+                  <span>
                   <%= link_to 'History', contact_path(c.contact), class: 'mr-2 font-medium' %>
                 </span>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

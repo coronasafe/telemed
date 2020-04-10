@@ -15,17 +15,35 @@ module Contacts
     def filter
       search = view.params[:search]
       if search.present?
-        filter_by_actions = search[:actions].present? ? filter_by_actions : Consultation.all
+        scope = scope_by_date
+        filter_by_actions = search[:actions].present? ? filter_by_actions(scope) : scope
         filter_by_cat = search[:category].present? ? filter_by_category(filter_by_actions) : filter_by_actions
         filter_by_test = search[:test_status].present? ? filter_by_test_status(filter_by_cat) : filter_by_cat
+
         search[:others].present? ? filter_by_others(filter_by_test) : filter_by_test
       else
-        Consultation.all
+        scope_by_date
       end
     end
 
-    def filter_by_actions
-      Consultation.joins(followups: :action).where(actions: { id: view.params[:search][:actions] })
+    def scope_by_date
+      Consultation.where(created_at: date_window)
+    end
+
+    def date_window
+      start_date.beginning_of_day..end_date.end_of_day
+    end
+
+    def start_date
+      @start_date ||= view.params[:search].try(:[], :start_date) ? view.params[:search][:start_date].to_date : Date.today
+    end
+
+    def end_date
+      @end_date ||= view.params[:search].try(:[], :end_date) ? view.params[:search][:end_date].to_date : Date.today
+    end
+
+    def filter_by_actions(consultations)
+      consultations.joins(followups: :action).where(actions: { id: view.params[:search][:actions] })
     end
 
     def filter_by_category(consultations)

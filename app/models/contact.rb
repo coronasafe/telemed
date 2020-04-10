@@ -1,5 +1,5 @@
 class Contact < ApplicationRecord
-  enum gender: { male: "male", female: "female" }
+  enum gender: { male: "male", female: "female", other: "other" }
 
   belongs_to :panchayat
   has_many :consultations

@@ -114,11 +114,10 @@ district = District.find_by(name: "Ernakulam")
   Panchayat.create!(name: d, district_id: district.id)
 end
 
-[{ name: "Review in 3hrs", color: "red" }, { name: "Review in 8 hrs", color: "orange" }, { name: "Review in 12 hrs", color: "yellow" }, { name: "Review Tomorrow", color: "blue" }].each do |d|
+[{ name: "Review in 3hrs", color: "red" }, { name: "Review in 8 hrs", color: "orange" }, { name: "Review in 12 hrs", color: "yellow" }, { name: "Review Tomorrow", color: "blue" }, { name: "Review after 3 days", color: "purple" }, { name: "Specialist advice required", color: "indigo" }, { name: "Plan for Home Care", color: "green" }, { name: "Plan for Home Care", color: "gray" }].each do |d|
   Action.create!(name: d[:name], color: d[:color])
 end
 
 ["Fever", "High Grade Fever", "Sore Throat", "Breathlessness", "Cough", "Diarrhoea", "Rhinitis", "Chest Pain", "Hemoptysis", "Cyanosis", "Drowsiness", "ILI with Red flag Signs", "Hypotension"].each do |d|
   Symptom.create!(name: d)
 end
-

@@ -8,6 +8,10 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
+  
+  config.time_zone = 'Kolkata'
+
+  config.active_record.default_timezone = :local # Or :utc
 
   # Show full error reports.
   config.consider_all_requests_local = true

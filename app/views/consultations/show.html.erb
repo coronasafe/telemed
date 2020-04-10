@@ -115,7 +115,8 @@
             <li class="my-2">
               <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
             <li class="my-2">
-              <span class="font-bold">Quarantined: </span><span><%= @consultation.quarantined_on.blank? ? "No" : "Yes #{time_ago_in_words(@consultation.quarantined_on)}" %></span>
+              <span class="font-bold">Quarantined: </span><span><%= @consultation.quarantined_on.blank? ? "No" : "Yes, #{time_ago_in_words(@consultation.quarantined_on)}" %>
+              ago</span>
             </li>
           </ul>
         </div>
