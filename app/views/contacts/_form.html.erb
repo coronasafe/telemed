@@ -5,7 +5,7 @@
 
     <%= f.input :name, required: true, label: 'Enter Patient Name' %>
 
-    <%= f.input :dob, label: 'Date of Birth', as: :date, class: 'flex', input_html: { class: 'form-select p-2 border' }, as: :date, start_year: Date.today.year - 90, end_year: Date.today.year, required: true %>
+    <%= f.input :dob, label: 'Date of Birth', as: :date, html5: true, class: 'flex', input_html: { class: 'form-select p-2 border' }, as: :date, start_year: Date.today.year - 90, end_year: Date.today.year, required: true %>
     <%= f.input :phone, required: true, label: 'Enter the Whatsapp number of the patient' %>
     <%= f.input :alternate_contact, label: 'Alternate contact number of the patient' %>
     <%= f.input :gender, input_html: { class: 'form-select' }, required: true %>
@@ -16,7 +16,6 @@
     <%= f.input :health_worker, label: 'Enter the name of health worker' %>
     <%= f.input :number_health_worker, label: 'Enter the mobile number of health worker' %>
     <%= f.input :consultation_type, collection: Consultation.consultation_types, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
-    <%= f.input :source, collection: Consultation.sources, input_html: { class: 'form-select' }, required: true, label: 'Enter the source' %>
     <%= f.input :old_case_id %>
     <%= f.input :description, label: 'Notes (optional)' %>
 

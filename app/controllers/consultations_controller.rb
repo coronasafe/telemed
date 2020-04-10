@@ -50,7 +50,7 @@ class ConsultationsController < ApplicationController
   end
 
   def consultation_create_params
-    params.require(:consultation).permit(:consultation_type, :source).merge(status: 'pending', creator_id: current_user.id)
+    params.require(:consultation).permit(:consultation_type).merge(status: 'pending', creator_id: current_user.id, source: current_user.source)
   end
 
   def consultation_update_params

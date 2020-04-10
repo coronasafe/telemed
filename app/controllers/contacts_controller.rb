@@ -128,6 +128,6 @@ class ContactsController < ApplicationController
   end
 
   def consultation_params
-    params.require(:contact).permit(:consultation_type, :source).merge(status: 'pending', creator_id: current_user.id)
+    params.require(:contact).permit(:consultation_type).merge(status: 'pending', creator_id: current_user.id, source: current_user.source)
   end
 end
