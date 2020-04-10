@@ -1,10 +1,10 @@
-<div class="md:w-1/3 w-full p-2">
+<div class="w-full p-2">
   <div class="bg-white shadow overflow-hidden  sm:rounded-lg mt-4 p-4 h-full">
     <div class="mt-4 text-3xl font-semibold">
-      Create New Request
+      Create a Follow Up
     </div>
-    <%= simple_form_for [@contact, @contact.consultations.build], defaults: { input_html: { class: 'form-input mt-1' }, wrapper_html: { class: 'flex flex-col my-2' } } do |f| %>
-      <%= f.input :consultation_type, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
+    <%= simple_form_for [@consultation, @consultation.followups.build], defaults: { input_html: { class: 'form-input mt-1' }, wrapper_html: { class: 'flex flex-col my-2' } } do |f| %>
+      <%= f.association :action, collection: Action.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
       <div class="mt-4">
         <%= f.button :submit, 'Save', class: 'inline-flex items-center px-3 py-3 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150' %>
       </div>

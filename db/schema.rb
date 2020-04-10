@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_191005) do
+ActiveRecord::Schema.define(version: 2020_04_09_132855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,20 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.index ["user_id"], name: "index_doctors_on_user_id"
   end
 
+  create_table "followups", force: :cascade do |t|
+    t.bigint "consultation_id"
+    t.bigint "action_id"
+    t.bigint "user_id"
+    t.bigint "completed_by_id"
+    t.datetime "completed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["action_id"], name: "index_followups_on_action_id"
+    t.index ["completed_by_id"], name: "index_followups_on_completed_by_id"
+    t.index ["consultation_id"], name: "index_followups_on_consultation_id"
+    t.index ["user_id"], name: "index_followups_on_user_id"
+  end
+
   create_table "medical_reqs", force: :cascade do |t|
     t.bigint "contact_id", null: false
     t.boolean "need_medicines"
@@ -165,6 +179,8 @@ ActiveRecord::Schema.define(version: 2020_04_07_191005) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "role"
     t.bigint "panchayat_id"
+    t.string "name"
+    t.string "source"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["panchayat_id"], name: "index_users_on_panchayat_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

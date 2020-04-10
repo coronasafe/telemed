@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   end
 
   resources :consultations do
+    resources :followups, only: %w[create] do
+      get :complete, on: :member
+    end
   end
 
 end

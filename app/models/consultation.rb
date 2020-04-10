@@ -9,9 +9,10 @@ class Consultation < ApplicationRecord
 
   belongs_to :contact
   belongs_to :doctor, optional: true
-  belongs_to :action, optional: true
   belongs_to :creator, class_name: 'User'
   has_many :consultation_symptoms
   has_many :symptoms, through: :consultation_symptoms
   has_many :consultation_versions
+  has_many :followups
+  has_many :actions, through: :followups
 end

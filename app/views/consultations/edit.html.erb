@@ -10,7 +10,7 @@
         <%= f.error_notification %>
         <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
         <%= f.input :reason_for_calling, required: true, label: 'Reason for calling' %>
-        <%= f.association :symptoms, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
+        <%= f.association :symptoms, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
         <%= f.input :other_details, required: false, label: 'Other Symptoms (optional)' %>
         <div class="mt-4 text-xl font-semibold">
           Current Status
@@ -20,10 +20,14 @@
           <%= f.input :category, required: true, label: 'Category of the Patient', input_html: { class: 'form-select' } %>
         </div>
         <div class="flex justify-between flex-col md:flex-row">
-          <%= f.input :antenatal, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Is the patient antenatal?' %>
-          <%= f.input :endemic, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Is the patient from an endemic area?' %>
+
+          <%= f.input :antenatal, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Is the patient antenatal?' %>
+
+
+
+          <%= f.input :endemic, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Is the patient from an endemic area?' %>
         </div>
-        <%= f.input :quarantined, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Is the patient Quarantined?' %>
+        <%= f.input :quarantined, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Is the patient Quarantined?' %>
         <div class="mt-4 text-xl font-semibold">
           Family Details
         </div>
@@ -50,14 +54,10 @@
         <div class="mt-4 text-xl font-semibold">
           Other Details
         </div>
-        <%= f.input :prescription_given, collection: [true, false], input_html: { class: 'form-select' }, required: true, label: 'Are you giving any prescription' %>
+        <%= f.input :prescription_given, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Are you giving any prescription' %>
         <%= f.input :surveillance, required: false, label: 'surveillance (optional)' %>
-        <%= f.input :consultation_type, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>
-        <%= f.input :source, input_html: { class: 'form-select' }, required: true, label: 'Enter the source' %>
         <%= f.input :notes, required: false, label: 'Notes (optional)' %>
         <%= f.input :status, input_html: { class: 'form-select' }, required: true, label: 'Consultation Status' %>
-        <%= f.association :action, collection: Action.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
-        <%#= f.association :action, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
         <div class="mt-4">
           <div class="flex">
             <%= f.button :submit, 'Save Call Summary', class: 'cursor-pointer  mr-2 px-4 inline-flex items-center px-3 py-3 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150' %>

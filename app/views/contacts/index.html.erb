@@ -101,6 +101,22 @@
     </div>
   </section>
 <% end %>
+<div>
+  <%= simple_form_for :search, url: root_path, method: "GET" do |f| %>
+    <%= f.input :from_date, label: 'Actions', class: 'flex', input_html: { class: 'flex form-select' }, as: :date, required: false %>
+    <%= f.input :to_date, label: 'Actions', class: 'flex', input_html: { class: 'flex form-select' }, as: :date, required: false %>
+    <div class="flex justify-between flex-col md:flex-row">
+      <%= f.input :actions, label: 'Actions', input_html: { class: 'flex form-select' }, collection: Action.all, required: false %>
+      <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select' }, collection: Consultation.categories, required: false %>
+      <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select' }, collection: Consultation.test_statuses, required: false %>
+      <%= f.input :others, label: '', input_html: { class: 'flex form-select' }, collection: ['ANC', 'Shifted To Hospital', 'Prescription Given'], required: false %>
+      <%#= f.input :category, label: "Flavor", collection: flavors, as: :check_boxes %>
+    </div>
+    <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
+
+    <%= link_to "Reset", root_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
+  <% end %>
+</div>
 
 <% if current_user.panchayat_admin? or current_user.phone_caller? %>
   <div class="mt-4 flex flex-col">
@@ -133,7 +149,7 @@
           </tr>
           </thead>
           <tbody class="bg-white">
-          <% Consultation.all.order(:created_at).reverse.each do |c| %>
+          <% presenter.consultations.each do |c| %>
             <tr class="hover:text-gray-100 cursor-pointer">
               <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
                 <%= link_to "EKM#{c.contact.id}", consultation_path(c) %>
@@ -148,8 +164,12 @@
                 <%= time_ago_in_words(c.created_at) %> ago
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <div class="<%= "bg-#{c.action&.color}-200 inline-flex mx-auto px-1 rounded font-semibold" %>">
-                  <%= c.action&.name %>
+                <div class="flex flex-col items-start">
+                  <% c.followups.where(completed_by: nil).each do |f| %>
+                    <div class="<%= "bg-#{f.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
+                      <%= f.action&.name %>
+                    </div>
+                  <% end %>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
@@ -157,7 +177,7 @@
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <span>
-                  <%= link_to 'View', edit_consultation_path(c), class: 'mr-2 font-medium' %>
+                  <%= link_to 'View', consultation_path(c), class: 'mr-2 font-medium' %>
                 </span>
                 <span>
                   <%= link_to 'History', contact_path(c.contact), class: 'mr-2 font-medium' %>
