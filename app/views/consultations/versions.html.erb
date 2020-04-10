@@ -1,0 +1,22 @@
+<div class=" max-w-3xl mx-auto">
+  <div class="mt-4">
+    <div class="text-xs">
+      <% if @consultation.consultation_versions.blank? %>
+        <div class="mt-4 text-xl text-center font-semibold px-4 py-6 bg-white shadow rounded">
+          Nothing to show :)
+        </div>
+      <% end %>
+      <% @consultation.consultation_versions.map do |a| %>
+        <div class="bg-white shadow  rounded-lg mt-2 px-4 py-6 bg-white">
+          <div class="text-2xl">
+            <%= a.user.name %>
+          </div>
+          <div>updated the record at  <%= time_ago_in_words(a.created_at) %> ago</div>
+          <div class="text-xs">
+            <%= a.change %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

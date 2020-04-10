@@ -1,5 +1,5 @@
 class ConsultationsController < ApplicationController
-  before_action :set_consultation, only: [:show, :edit, :update, :destroy]
+  before_action :set_consultation, only: [:show, :edit, :update, :destroy, :versions]
   before_action :set_contact, only: [:show, :edit, :update, :destroy]
 
   def create
@@ -19,6 +19,7 @@ class ConsultationsController < ApplicationController
     @consultation.update_attributes(consultation_update_params)
 
     if @consultation.save!
+      @consultation.consultation_versions.create!(change: consultation_update_params, user_id: current_user.id)
       @consultation.consultation_symptoms.destroy_all
 
       Symptom.where(id: params['consultation']['symptom_ids']).each do |s|
@@ -33,6 +34,9 @@ class ConsultationsController < ApplicationController
   end
 
   def show
+  end
+
+  def versions
   end
 
   private

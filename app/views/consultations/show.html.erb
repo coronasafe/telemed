@@ -8,7 +8,10 @@
         <%= link_to 'Update call summary', edit_consultation_path(@consultation), class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
       <div>
-        <%= link_to 'History', contact_path(@contact), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+        <%= link_to 'History', contact_path(@contact), class: 'mt-2 mr-2  inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+      </div>
+      <div>
+        <%= link_to 'Versions', versions_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
     </div>
   </div>
@@ -244,4 +247,10 @@
 
   </div>
   <%= render 'followup' %>
+
+  <div class="text-xs">
+    <% @consultation.consultation_versions.map do |a| %>
+      <%= a.change %>
+    <% end %>
+  </div>
 </div>
