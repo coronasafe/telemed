@@ -16,5 +16,5 @@ class Consultation < ApplicationRecord
   has_many :consultation_versions
   has_many :followups
   # has_many :actions, through: :followups
-  belongs_to :action
+  belongs_to :action, optional: :true
 end
