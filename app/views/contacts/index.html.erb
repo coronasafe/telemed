@@ -112,6 +112,8 @@
       <%= f.input :actions, label: 'Actions', input_html: { class: 'flex form-select mr-4' }, collection: Action.all, required: false %>
       <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories, required: false %>
       <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.test_statuses, required: false %>
+      <%= f.input :current_status, label: 'Status Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.current_statuses, required: false %>
+      <%= f.input :status, label: 'Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.statuses, required: false %>
       <%= f.input :others, label: '', input_html: { class: 'flex form-select mr-4' }, collection: ['ANC', 'Shifted To Hospital', 'Prescription Given'], required: false %>
     </div>
     <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>

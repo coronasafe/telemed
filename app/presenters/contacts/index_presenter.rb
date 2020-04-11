@@ -19,8 +19,10 @@ module Contacts
         filter_by_actions = search[:actions].present? ? filter_by_actions(scope) : scope
         filter_by_cat = search[:category].present? ? filter_by_category(filter_by_actions) : filter_by_actions
         filter_by_test = search[:test_status].present? ? filter_by_test_status(filter_by_cat) : filter_by_cat
+        filter_by_current_status = search[:current_status].present? ? filter_by_current_status(filter_by_test) : filter_by_test
+        filter_by_status = search[:status].present? ? filter_by_status(filter_by_current_status) : filter_by_current_status
 
-        search[:others].present? ? filter_by_others(filter_by_test) : filter_by_test
+        search[:others].present? ? filter_by_others(filter_by_status) : filter_by_status
       else
         scope_by_date
       end
@@ -48,6 +50,14 @@ module Contacts
 
     def filter_by_actions(consultations)
       consultations.where(action_id: view.params[:search][:actions])
+    end
+
+    def filter_by_current_status(consultations)
+      consultations.where(current_status: view.params[:search][:current_status])
+    end
+
+    def filter_by_status(consultations)
+      consultations.where(action_id: view.params[:search][:status])
     end
 
     def filter_by_category(consultations)
