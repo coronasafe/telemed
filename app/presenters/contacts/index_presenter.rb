@@ -42,8 +42,12 @@ module Contacts
       @end_date ||= view.params[:search].try(:[], :end_date) ? view.params[:search][:end_date].to_date : Date.today
     end
 
+    # def filter_by_actions(consultations)
+    #   consultations.joins(followups: :action).where(actions: { id: view.params[:search][:actions] })
+    # end
+
     def filter_by_actions(consultations)
-      consultations.joins(followups: :action).where(actions: { id: view.params[:search][:actions] })
+      consultations.where(action_id: view.params[:search][:actions])
     end
 
     def filter_by_category(consultations)

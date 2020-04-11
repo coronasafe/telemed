@@ -162,8 +162,8 @@
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
                   <%= link_to "EKM#{c.contact.id}", consultation_path(c) %>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                  <%= c.contact.name %>
+                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
+                  <%= link_to c.contact.name, contact_path(c.contact), class: 'mr-2 font-medium' %>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
                   <%= c.consultation_type %>
@@ -173,11 +173,11 @@
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
                   <div class="flex flex-col items-start">
-                    <% c.followups.where(completed_by: nil).each do |f| %>
-                      <div class="<%= "bg-#{f.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
-                        <%= f.action&.name %>
-                      </div>
-                    <% end %>
+
+                    <div class="<%= "bg-#{c.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
+                      <%= c.action&.name %>
+                    </div>
+
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
@@ -186,9 +186,6 @@
                 <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <span>
                   <%= link_to 'View', consultation_path(c), class: 'mr-2 font-medium' %>
-                </span>
-                  <span>
-                  <%= link_to 'History', contact_path(c.contact), class: 'mr-2 font-medium' %>
                 </span>
                 </td>
               </tr>

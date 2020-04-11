@@ -8,10 +8,10 @@
         <%= link_to 'Update call summary', edit_consultation_path(@consultation), class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
       <div>
-        <%= link_to 'History', contact_path(@contact), class: 'mt-2 mr-2  inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+        <%= link_to 'View Patient', contact_path(@contact), class: 'mt-2 mr-2  inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
       <div>
-        <%= link_to 'Versions', versions_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+        <%= link_to 'History', versions_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
       </div>
     </div>
   </div>
@@ -212,39 +212,39 @@
       </div>
     </div>
   </div>
-  <div class="mt-4">
-    <% @consultation.followups.each do |f| %>
-      <div class="bg-white shadow overflow-hidiven  rounded-lg mt-2 px-4 py-6 bg-<%= f.action.color %>-100">
+  <!--  <div class="mt-4">-->
+  <%# @consultation.followups.each do |f| %>
+  <!--      <div class="bg-white shadow overflow-hidiven  rounded-lg mt-2 px-4 py-6 bg-<%#= f.action.color %>-100">-->
 
-        <div class="text-xl font-semibold">
-          <span class="mr-2"><%= f.action.name %></span>
+  <!--        <div class="text-xl font-semibold">-->
+  <!--          <span class="mr-2"><%#= f.action.name %></span>-->
 
-          <% if f.completed_by.blank? %>
-            <div class="bg-white rounded shadow inline-block px-2 py-1">
-              Pending
-            </div>
-          <% end %>
+  <%# if f.completed_by.blank? %>
+  <!--            <div class="bg-white rounded shadow inline-block px-2 py-1">-->
+  <!--              Pending-->
+  <!--            </div>-->
+  <%# end %>
 
-          <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-            Follow up followup was created by
-            <span class="font-bold"><%= f.user.name %></span> <%= time_ago_in_words(f.created_at) %>
-            ago
-          </p>
-          <% if f.completed_by.present? %>
-            <div>
-              <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-                Follow up followup was completed by
-                <span class="font-bold"><%= f.user.name %></span> <%= time_ago_in_words(f.created_at) %>
-                ago
-              </p>
-            </div>
-          <% else %>
-            <%= link_to 'Complete Now', complete_consultation_followup_path(@consultation, f), class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4' %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+  <!--          <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">-->
+  <!--            Follow up followup was created by-->
+  <!--            <span class="font-bold"><%#= f.user.name %></span> <%#= time_ago_in_words(f.created_at) %>-->
+  <!--            ago-->
+  <!--          </p>-->
+  <%# if f.completed_by.present? %>
+  <!--            <div>-->
+  <!--              <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">-->
+  <!--                Follow up followup was completed by-->
+  <!--                <span class="font-bold"><%#= f.user.name %></span> <%#= time_ago_in_words(f.created_at) %>-->
+  <!--                ago-->
+  <!--              </p>-->
+  <!--            </div>-->
+  <%# else %>
+  <%#= link_to 'Complete Now', complete_consultation_followup_path(@consultation, f), class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4' %>
+  <%# end %>
+  <!--        </div>-->
+  <!--      </div>-->
+  <%# end %>
 
-  </div>
-  <%= render 'followup' %>
+  <!--  </div>-->
+  <%#= render 'followup' %>
 </div>

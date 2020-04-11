@@ -15,5 +15,6 @@ class Consultation < ApplicationRecord
   has_many :symptoms, through: :consultation_symptoms
   has_many :consultation_versions
   has_many :followups
-  has_many :actions, through: :followups
+  # has_many :actions, through: :followups
+  belongs_to :action
 end

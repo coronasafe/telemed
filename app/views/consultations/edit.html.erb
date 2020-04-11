@@ -59,6 +59,7 @@
         <%= f.input :surveillance, required: false, label: 'surveillance (optional)' %>
         <%= f.input :notes, required: false, label: 'Notes (optional)' %>
         <%= f.input :status, input_html: { class: 'form-select' }, required: true, label: 'Consultation Status' %>
+        <%= f.association :action, collection: Action.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
         <div class="mt-4">
           <div class="flex">
             <%= f.button :submit, 'Save Call Summary', class: 'cursor-pointer  mr-2 px-4 inline-flex items-center px-3 py-3 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150' %>
