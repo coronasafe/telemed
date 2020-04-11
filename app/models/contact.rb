@@ -13,6 +13,14 @@ class Contact < ApplicationRecord
   has_many :calls
   has_many :callees, through: :calls, source: :user
 
+  validate :must_have_valid_number
+
+  def must_have_valid_number
+    return if phone.length == 10 && phone.scan(/\D/).empty?
+
+    errors[:base] << "Should be a valid phone number"
+  end
+
   def age_from_dob
     now = Time.zone.now.to_date
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)

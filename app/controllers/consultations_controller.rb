@@ -6,7 +6,7 @@ class ConsultationsController < ApplicationController
     @contact = Contact.find(params[:contact_id])
     consultation = @contact.consultations.new(consultation_create_params)
 
-    if consultation.save!
+    if consultation.save
       respond_to do |format|
         format.html { redirect_to @contact, notice: 'Request was Added Successfully' }
       end
@@ -18,7 +18,7 @@ class ConsultationsController < ApplicationController
   def update
     @consultation.update_attributes(consultation_update_params)
 
-    if @consultation.save!
+    if @consultation.save
       @consultation.consultation_versions.create!(change: consultation_update_params, user_id: current_user.id)
       @consultation.consultation_symptoms.destroy_all
 

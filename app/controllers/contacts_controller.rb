@@ -29,12 +29,13 @@ class ContactsController < ApplicationController
       redirect_to existing_contact
     else
       respond_to do |format|
-        if @contact.save!
+        if @contact.save
           create_consultation(@contact)
           format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
           format.json { render :show, status: :created, location: @contact }
         else
-          format.html { render :new }
+          flash.now[:alert] = 'Invalid mobile number'
+          format.html { render :new}
           format.json { render json: @contact.errors, status: :unprocessable_entity }
         end
       end
