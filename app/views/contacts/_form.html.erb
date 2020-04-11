@@ -12,7 +12,7 @@
     <%= f.association :panchayat, collection: Panchayat.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
     <%= f.input :ward %>
     <%= f.input :landmark %>
-    <%= f.input :phc %>
+    <%= f.input :phc, label: 'PHC' %>
     <%= f.input :health_worker, label: 'Enter the name of health worker' %>
     <%= f.input :number_health_worker, label: 'Enter the mobile number of health worker' %>
     <%= f.input :consultation_type, collection: Consultation.consultation_types, input_html: { class: 'form-select' }, required: true, label: 'Choose a consultation type ' %>

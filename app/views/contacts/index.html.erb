@@ -110,7 +110,7 @@
     </div>
     <div class="flex mt-4 flex-col md:flex-row">
       <%= f.input :actions, label: 'Actions', input_html: { class: 'flex form-select mr-4' }, collection: Action.all, required: false %>
-      <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories, required: false %>
+      <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories.keys.map { |a| [a.titleize, a] }, required: false %>
       <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.test_statuses, required: false %>
       <%= f.input :current_status, label: 'Status Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.current_statuses, required: false %>
       <%= f.input :status, label: 'Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.statuses, required: false %>
@@ -121,39 +121,72 @@
     <%= link_to "Reset", root_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
   <% end %>
 </div>
-
+<% if params[:search].present? %>
+  <div class="font-semibold mt-4 text-xl">
+    filters Applied
+  </div>
+  <div>
+    <% if params[:search][:actions].present? %>
+      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+        Actions: <%= Action.where(id: params[:search][:actions]).pluck(:name).join(', ') %>
+      </div>
+    <% end %>
+    <% if presenter.search_category.present? %>
+      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+        Category: <%= presenter.search_category %>
+      </div>
+    <% end %>
+    <% if presenter.search_test.present? %>
+      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+        Test Status: <%= presenter.search_test %>
+      </div>
+    <% end %>
+    <% if presenter.search_current_status.present? %>
+      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+        Belongs to: <%= presenter.search_current_status %>
+      </div>
+    <% end %>
+    <% if presenter.search_others.present? %>
+      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+        Others: <%= presenter.search_others %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 <% if current_user.panchayat_admin? or current_user.phone_caller? %>
   <% if presenter.consultations.blank? %>
     <div class="mt-4 text-xl font-semibold px-4 py-6 bg-white shadow rounded">
       Noting to show, Please try changing the filters
     </div>
   <% else %>
-
+    <div class="font-semibold mt-4 text-3xl">
+      Consultations today
+    </div>
     <div class="mt-4 flex flex-col">
       <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
           <table class="min-w-full">
             <thead>
             <tr>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 ID
               </th>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Name
               </th>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Consultation
               </th>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Requested
               </th>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Action
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Category
               </th>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 view
               </th>
             </tr>
@@ -164,28 +197,29 @@
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
                   <%= link_to "EKM#{c.contact.id}", consultation_path(c) %>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
+                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
                   <%= link_to c.contact.name, contact_path(c.contact), class: 'mr-2 font-medium' %>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                   <%= c.consultation_type %>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                   <%= time_ago_in_words(c.created_at) %> ago
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+                  <%= c.category&.titleize %>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                   <div class="flex flex-col items-start">
-
                     <div class="<%= "bg-#{c.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
                       <%= c.action&.name %>
                     </div>
-
+                    <div class="text-sm mt-2">
+                      added <%= time_ago_in_words(c.updated_at) %> ago
+                    </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
-                  <%= c.status %>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <span>
                   <%= link_to 'View', consultation_path(c), class: 'mr-2 font-medium' %>
                 </span>

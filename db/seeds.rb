@@ -114,7 +114,17 @@ district = District.find_by(name: "Ernakulam")
   Panchayat.create!(name: d, district_id: district.id)
 end
 
-[{ name: "Review in 3hrs", color: "red" }, { name: "Review in 8 hrs", color: "orange" }, { name: "Review in 12 hrs", color: "yellow" }, { name: "Review Tomorrow", color: "blue" }, { name: "Review after 3 days", color: "purple" }, { name: "Specialist advice required", color: "indigo" }, { name: "Plan for Home Care", color: "green" }, { name: "Plan for Home Care", color: "gray" }].each do |d|
+[
+  { name: "Pending", color: "white" },
+  { name: "Not reachable ", color: "pink" },
+  { name: "Review in 3hrs", color: "red" },
+  { name: "Review in 8 hrs", color: "orange" },
+  { name: "Review in 12 hrs", color: "yellow" },
+  { name: "Review Tomorrow", color: "blue" },
+  { name: "Review after 3 days", color: "purple" },
+  { name: "Specialist advice required", color: "indigo" },
+  { name: "Plan for Home Care", color: "green" },
+  { name: "Other", color: "gray" }].each do |d|
   Action.create!(name: d[:name], color: d[:color])
 end
 

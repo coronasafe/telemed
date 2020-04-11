@@ -79,6 +79,31 @@ module Contacts
       end
     end
 
+    def search
+      @search ||= view.params[:search]
+
+    end
+
+    def search_actions
+      search.present? ? search[:actions].present? ? search[:actions] : nil : nil
+    end
+
+    def search_category
+      search.present? ? search[:category].present? ? search[:category] : nil : nil
+    end
+
+    def search_test
+      search.present? ? search[:test_status].present? ? search[:test_status] : nil : nil
+    end
+
+    def search_current_status
+      search.present? ? search[:current_status].present? ? search[:current_status] : nil : nil
+    end
+
+    def search_others
+      search.present? ? search[:others].present? ? search[:others] : nil : nil
+    end
+
     def filter_by_test_status(consultations)
       consultations.where(test_status: view.params[:search][:test_status])
     end
