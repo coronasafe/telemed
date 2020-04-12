@@ -9,7 +9,7 @@ module Contacts
     end
 
     def consultations
-      @consultations ||= filter.present? ? filter.distinct.order(:created_at).reverse : []
+      @consultations ||= filter.present? ? filter.includes(:contact, :action).distinct.order(:created_at).reverse : []
     end
 
     def filter
@@ -37,7 +37,7 @@ module Contacts
     end
 
     def default_start_date
-      Date.yesterday
+      Time.zone.yesterday.to_date
     end
 
     def start_date
@@ -45,7 +45,7 @@ module Contacts
     end
 
     def end_date
-      @end_date ||= view.params[:search].try(:[], :end_date) ? view.params[:search][:end_date].to_date : Date.today
+      @end_date ||= view.params[:search].try(:[], :end_date) ? view.params[:search][:end_date].to_date : Time.zone.now.to_date
     end
 
     # def filter_by_actions(consultations)
