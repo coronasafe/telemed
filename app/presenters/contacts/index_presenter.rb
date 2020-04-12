@@ -78,6 +78,8 @@ module Contacts
           consultations.where(prescription_given: true)
         when 'Endemic_Area'
           consultations.where(endemic: true)
+        when 'Quarantined'
+          consultations.where(quarantined: true)
         else
           consultations
       end

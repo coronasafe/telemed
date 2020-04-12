@@ -1,5 +1,5 @@
 class ConsultationsController < ApplicationController
-  before_action :set_consultation, only: [:show, :edit, :update, :destroy, :versions]
+  before_action :set_consultation, only: [:show, :edit, :update, :destroy, :versions, :copy]
   before_action :set_contact, only: [:show, :edit, :update, :destroy]
 
   def create
@@ -42,6 +42,22 @@ class ConsultationsController < ApplicationController
   def show
   end
 
+  def copy
+    c = @consultation.dup
+
+    @consultation.symptoms.each do |s|
+      ConsultationSymptom.create!(consultation: c, symptom: s)
+    end
+
+    @consultation.comorbidities.each do |s|
+      ConsultationComorbidity.create!(consultation: c, comorbidity: s)
+    end
+
+    c.save!
+
+    redirect_to edit_consultation_path(c)
+  end
+
   def versions
   end
 
@@ -55,8 +71,12 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.find(params[:id])
   end
 
+  def action
+    Action.find_by(name: 'Pending')
+  end
+
   def consultation_create_params
-    params.require(:consultation).permit(:consultation_type).merge(status: 'pending', creator_id: current_user.id, source: current_user.source)
+    params.require(:consultation).permit(:consultation_type).merge(status: 'pending', action: action, creator_id: current_user.id, source: current_user.source)
   end
 
   def consultation_update_params

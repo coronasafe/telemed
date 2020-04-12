@@ -5,12 +5,12 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     super do
       if current_user.try(:admin)
-        if not ["district_admin", "panchayat_admin", "phone_caller"].include?(resource.role)
+        if not ["district_admin", "doctor", "phone_caller"].include?(resource.role)
           resource.role = "phone_caller"
           resource.save
         end
       elsif current_user.try(:district_admin)
-        if not ["panchayat_admin", "phone_caller"].include?(resource.role)
+        if not ["doctor", "phone_caller"].include?(resource.role)
           resource.role = "phone_caller"
           resource.save
         end
@@ -19,6 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   private
+
   def redirect_unless_admin
     unless current_user.try(:admin?) or current_user.try(:district_admin?)
       flash[:alert] = "Access Denied! Only Admins are Allowed Access"
@@ -31,6 +32,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
-    new_user_registration_path
+    root_path
   end
 end

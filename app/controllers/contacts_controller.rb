@@ -35,7 +35,7 @@ class ContactsController < ApplicationController
           format.json { render :show, status: :created, location: @contact }
         else
           flash.now[:alert] = 'Invalid mobile number'
-          format.html { render :new}
+          format.html { render :new }
           format.json { render json: @contact.errors, status: :unprocessable_entity }
         end
       end
@@ -124,11 +124,15 @@ class ContactsController < ApplicationController
     contact.consultations.create!(consultation_params)
   end
 
+  def action
+    Action.find_by(name: 'Pending')
+  end
+
   def contact_params
     params.require(:contact).permit(:name, :phone, :gender, :dob, :age, :house_name, :alternate_contact, :ward, :landmark, :panchayat_id, :phc, :health_worker, :number_health_worker, :user_id, :old_case_id, :description)
   end
 
   def consultation_params
-    params.require(:contact).permit(:consultation_type).merge(status: 'pending', creator_id: current_user.id, source: current_user.source)
+    params.require(:contact).permit(:consultation_type).merge(status: 'pending', action: action, creator_id: current_user.id, source: current_user.source)
   end
 end
