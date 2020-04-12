@@ -5,7 +5,7 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :validatable
 
   enum role: { phone_caller: "phone_caller", district_admin: "district_admin", doctor: "doctor", admin: "admin" }
-  enum source: { ima: 'IMA', deoc: "deoc", police: "police", private_hospital: "private_hospital", migrant_project: "migrant_project", medical_practitioner: "medical_practitioner" }
+  enum source: { ima: 'ima', deoc: "deoc", police: "police", private_hospital: "private_hospital", migrant_project: "migrant_project", medical_practitioner: "medical_practitioner" }
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
