@@ -21,9 +21,15 @@ class ConsultationsController < ApplicationController
     if @consultation.save
       @consultation.consultation_versions.create!(change: consultation_update_params, user_id: current_user.id)
       @consultation.consultation_symptoms.destroy_all
+      @consultation.comorbidities.destroy_all
+
 
       Symptom.where(id: params['consultation']['symptom_ids']).each do |s|
         ConsultationSymptom.create!(consultation: @consultation, symptom: s)
+      end
+
+      Comorbidity.where(id: params['consultation']['comorbidity_ids']).each do |s|
+        ConsultationComorbidity.create!(consultation: @consultation, comorbidity: s)
       end
       respond_to do |format|
         format.html { redirect_to @consultation, notice: 'Request was Added Successfully' }
@@ -55,8 +61,8 @@ class ConsultationsController < ApplicationController
 
   def consultation_update_params
     params.require(:consultation).permit(:consultation_type, :source, :reason_for_calling, :other_details,
-      :current_status, :category, :antenatal, :quarantined, :quarantined_on, :endemic,
-      :family_members_count, :elderly, :comorbidities, :prescription_given, :notes, :test_status, :sample_taken_on,
+      :current_status, :category, :antenatal, :quarantined, :quarantined_on, :endemic, :requires_surveillance,
+      :family_members_count, :elderly, :other_comorbidity, :prescription_given, :notes, :test_status, :sample_taken_on, :comorbidity_ids,
       :action_id, :shift_from, :shift_to, :reason, :status, :surveillance, :contact_id, :doctor_id, :symptom_ids, :action_id
     )
   end

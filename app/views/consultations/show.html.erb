@@ -18,13 +18,6 @@
   <div class="bg-white shadow overflow-hidiven  rounded-lg mt-2 ">
     <div class="px-4 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
       <div class="w-full">
-        <div>
-          <% @consultation.followups.where(completed_by: nil).each do |f| %>
-            <div class="<%= "bg-#{f.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold" %>">
-              <%= f.action&.name %>
-            </div>
-          <% end %>
-        </div>
         <div class="flex md:flex-row flex-col justify-between">
           <div>
             <div class="mt-4 text-3xl font-semibold">
@@ -41,10 +34,10 @@
             </div>
           </div>
           <div class="flex flex-col items-start md:items-end">
-            <div class="mt-4 text-3xl font-semibold">
-              <%= @consultation.status.titleize %>
+            <div class="mt-4 text-3xl font-semibold px-2 -py-1 rounded shadow bg-<%= @consultation.action.color %>-200">
+              <%= @consultation&.action&.name&.titleize %>
             </div>
-            <div class="text-lg text-2xl font-medium text-gray-900">
+            <div class="mt-2 text-lg text-2xl font-medium text-gray-900">
               <%= @consultation.consultation_type.titleize %>
             </div>
           </div>
@@ -133,9 +126,19 @@
             <li class="my-2"><span class="font-bold">Total Family Members:</span>
               <span><%= @consultation.family_members_count %></span></li>
             <li class="my-2"><span class="font-bold">Elderly: </span><span><%= @consultation.elderly %></span></li>
-            <li class="my-2"><span class="font-bold">Comorbidities:</span>
-              <span><%= @consultation.comorbidities %></span></li>
           </ul>
+        </div>
+      </div>
+      <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
+        <div class="w-full md:w-1/3 text-sm leading-5 font-medium text-gray-500">
+          Comorbidities
+        </div>
+        <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
+          <% @consultation.comorbidities.map do |s| %>
+            <span class="py-1 px-2 mr-2 bg-orange-200 rounded">
+            <%= s.name %>
+            </span>
+          <% end %>
         </div>
       </div>
       <div class="flex md:flex-row flex-col sm:px-6 py-2 md:py-5 border-t">
@@ -195,7 +198,7 @@
         </div>
         <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
           <p>
-            <%= @consultation.surveillance %>
+            <%= @consultation.requires_surveillance ? 'Yes' : 'No' %>, <%= @consultation.surveillance %>
           </p>
         </div>
       </div>

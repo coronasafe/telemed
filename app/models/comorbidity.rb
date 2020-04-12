@@ -1,0 +1,2 @@
+class Comorbidity < ApplicationRecord
+end

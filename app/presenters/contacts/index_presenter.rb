@@ -36,8 +36,12 @@ module Contacts
       start_date.beginning_of_day..end_date.end_of_day
     end
 
+    def default_start_date
+      Date.yesterday
+    end
+
     def start_date
-      @start_date ||= view.params[:search].try(:[], :start_date) ? view.params[:search][:start_date].to_date : Date.today
+      @start_date ||= view.params[:search].try(:[], :start_date) ? view.params[:search][:start_date].to_date : default_start_date
     end
 
     def end_date

@@ -10,7 +10,7 @@
         <%= f.error_notification %>
         <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
         <%= f.input :reason_for_calling, required: true, label: 'Reason for calling' %>
-        <%= f.association :symptoms, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
+        <%= f.association :symptoms, collection: Symptom.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
         <%= f.input :other_details, required: false, label: 'Other Symptoms (optional)' %>
         <div class="mt-4 text-xl font-semibold">
           Current Status
@@ -22,11 +22,9 @@
         <div class="flex justify-between flex-col md:flex-row">
 
           <%= f.input :antenatal, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Is the patient antenatal?' %>
-
-
-
           <%= f.input :endemic, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Is the patient from an endemic area?' %>
         </div>
+        <%= f.input :quarantined, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Is the patient quarantined?' %>
         <%= f.input :quarantined_on, label: 'Quarantined On', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4' }, as: :date, default: Date.today, required: false %>
         <div class="mt-4 text-xl font-semibold">
           Family Details
@@ -35,7 +33,8 @@
           <%= f.input :family_members_count, label: 'Number of family members', input_html: { class: 'form-select' } %>
           <%= f.input :elderly, label: 'Number of elderly patients', input_html: { class: 'form-select' } %>
         </div>
-        <%= f.input :comorbidities, label: 'Cormorbidities', input_html: { class: 'form-select' } %>
+        <%= f.association :comorbidities, collection: Comorbidity.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select-1' } %>
+        <%= f.input :other_comorbidity, label: 'other comorbidity (optional)', input_html: { class: 'form-select' } %>
 
         <div class="mt-4 text-xl font-semibold">
           Test Details
@@ -56,9 +55,9 @@
           Other Details
         </div>
         <%= f.input :prescription_given, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Are you giving any prescription' %>
+        <%= f.input :requires_surveillance, collection: [['Yes', true], ['No', false]], as: :radio_buttons, input_html: { class: 'l' }, required: true, label: 'Do you want to refer to survelliance team?' %>
         <%= f.input :surveillance, required: false, label: 'surveillance (optional)' %>
         <%= f.input :notes, required: false, label: 'Notes (optional)' %>
-        <%= f.input :status, input_html: { class: 'form-select' }, required: true, label: 'Consultation Status' %>
         <%= f.association :action, collection: Action.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
         <div class="mt-4">
           <div class="flex">

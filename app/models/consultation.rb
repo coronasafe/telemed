@@ -6,6 +6,9 @@ class Consultation < ApplicationRecord
   enum category: { a: "a", b1: "b1", b2: "b2", c: "c", uncategorized: "uncategorized" }
   enum test_status: { positive: "positive", negative: "negative", awaiting: "awaiting", test_invalid: "test_invalid" }
   enum reason: { admission: "admission", consultation: "consultation", testing: "testing", anc: "anc", care_centre: "care_centre" }
+  enum comorbidities: { uncontrolled_diabetes_mellitus: "Uncontrolled diabetes mellitus", hypertension: "Hypertension", heart_disease: "Heart disease",
+    lung_disease: "Lung disease", liver_disease: "Liver disease", kidney_disease: "Kidney disease", cancer: "cancer",
+    immunocompromised: "Immunocompromised", autoimmune_diseases: "Autoimmune diseases", pregnant: "Pregnant", old: ">60years", long_steroid: "Long term steroid use" }
   # enum transport: { ambulance: "ambulance", own_vehicle: "own_vehicle", others: "others" }
 
   belongs_to :contact
@@ -17,4 +20,6 @@ class Consultation < ApplicationRecord
   has_many :followups
   # has_many :actions, through: :followups
   belongs_to :action, optional: :true
+  has_many :consultation_comorbidity
+  has_many :comorbidities, through: :consultation_comorbidity
 end
