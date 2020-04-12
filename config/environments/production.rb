@@ -87,7 +87,6 @@ Rails.application.configure do
   end
 
   config.time_zone = 'Kolkata'
-
   config.active_record.default_timezone = :local # Or :utc
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
