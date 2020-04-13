@@ -67,6 +67,7 @@
     <div class="flex">
       <%= f.input :start_date, label: 'From', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.start_date.to_s }, as: :date, default: Date.today, required: false %>
       <%= f.input :end_date, label: 'To', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.end_date.to_s }, as: :date, default: Date.today, required: false %>
+      <%= f.input :assigned, label: 'Assigned', input_html: { class: 'flex form-select mr-4' }, selected: presenter.assigned_to_me, collection: ['Assigned to Me', 'Show All'], required: true %>
     </div>
     <div class="flex mt-4 flex-col md:flex-row">
       <%= f.input :actions, label: 'Status', input_html: { class: 'flex form-select mr-4' }, collection: Action.all, required: false %>

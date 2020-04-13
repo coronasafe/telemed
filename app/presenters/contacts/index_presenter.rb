@@ -29,7 +29,7 @@ module Contacts
     end
 
     def scope_by_date
-      Consultation.where(created_at: date_window)
+      assigned_to_me == 'Assigned to Me' ? Consultation.where(created_at: date_window, doctor_id: current_user.id) : Consultation.where(created_at: date_window)
     end
 
     def date_window
@@ -51,6 +51,12 @@ module Contacts
     # def filter_by_actions(consultations)
     #   consultations.joins(followups: :action).where(actions: { id: view.params[:search][:actions] })
     # end
+    #
+    def assigned_to_me
+      assigned = current_user.role == 'doctor' ? 'Assigned to Me' : 'Show All'
+
+      search.present? ? search[:assigned].present? ? search[:assigned] : assigned : assigned
+    end
 
     def filter_by_actions(consultations)
       consultations.where(action_id: view.params[:search][:actions])

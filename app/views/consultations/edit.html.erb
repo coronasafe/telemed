@@ -43,13 +43,14 @@
         <%= f.input :sample_taken_on, label: 'Sample taken on', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4' }, as: :date, default: Date.today, required: false %>
 
         <div class="mt-4 text-xl font-semibold">
-          Shifting Details
+          Shifting Details (optional)
         </div>
+        <%= f.input :reason, label: 'Reason for shifting (optional)', input_html: { class: 'form-select' } %>
         <div class="flex justify-between flex-col md:flex-row">
           <%= f.input :shift_from, label: 'Shifting from' %>
           <%= f.input :shift_to, label: 'Shifting to' %>
         </div>
-        <%= f.input :reason, label: 'Reason for shifting', input_html: { class: 'form-select' } %>
+
 
         <div class="mt-4 text-xl font-semibold">
           Other Details
