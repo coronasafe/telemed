@@ -74,7 +74,7 @@
       <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories.keys.map { |a| [a.titleize, a] }, required: false %>
       <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.test_statuses, required: false %>
       <%= f.input :current_status, label: 'Belongs to', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.current_statuses, required: false %>
-      <%= f.input :others, label: '', input_html: { class: 'flex form-select mr-4' }, collection: ['ANC', 'Shifted To Hospital', 'Prescription Given', 'Quarantined'], required: false %>
+      <%= f.input :others, label: '', input_html: { class: 'flex form-select mr-4' }, collection: ['ANC', 'Shifted To Hospital', 'Prescription Given', 'Quarantined', 'New'], required: false %>
     </div>
     <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
 

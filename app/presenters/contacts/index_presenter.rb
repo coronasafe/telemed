@@ -86,6 +86,8 @@ module Contacts
           consultations.where(endemic: true)
         when 'Quarantined'
           consultations.where(quarantined: true)
+        when 'New'
+          consultations.joins(:contact).where(contacts: { created_at: date_window })
         else
           consultations
       end
