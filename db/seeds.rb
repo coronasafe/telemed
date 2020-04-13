@@ -116,8 +116,8 @@ end
 
 [
   { name: "Pending", color: "white" },
-  { name: "Not reachable ", color: "pink" },
-  { name: "Review in 3hrs", color: "red" },
+  { name: "Not reachable ", color: "red" },
+  { name: "Review in 3hrs", color: "pink" },
   { name: "Review in 8 hrs", color: "orange" },
   { name: "Review in 12 hrs", color: "yellow" },
   { name: "Review Tomorrow", color: "blue" },
