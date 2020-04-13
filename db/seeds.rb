@@ -130,11 +130,10 @@ end
 
 ["Fever", "High Grade Fever", "Sore Throat", "Breathlessness", "Cough", "Diarrhoea", "Rhinitis", "Chest Pain", "Hemoptysis", "Cyanosis", "Drowsiness", "ILI with Red flag Signs", "Hypotension", "Others"].each do |d|
   Symptom.create!(name: d)
+end
 
-
-  ["Uncontrolled diabetes mellitus", "Hypertension", "Heart disease",
-    "Lung disease", "Liver disease", "Kidney disease", "cancer",
-    "Immunocompromised", "Autoimmune diseases", "Pregnant", ">60years", "Long term steroid use", "Others"].each do |c|
-    Comorbidity.create!(name: c)
-  end
+["Uncontrolled diabetes mellitus", "Hypertension", "Heart disease",
+  "Lung disease", "Liver disease", "Kidney disease", "cancer",
+  "Immunocompromised", "Autoimmune diseases", "Pregnant", ">60years", "Long term steroid use", "Others"].each do |c|
+  Comorbidity.create!(name: c)
 end

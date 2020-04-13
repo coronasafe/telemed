@@ -44,6 +44,7 @@ class ConsultationsController < ApplicationController
 
   def copy
     c = @consultation.dup
+    c.save!
 
     @consultation.symptoms.each do |s|
       ConsultationSymptom.create!(consultation: c, symptom: s)
@@ -52,8 +53,6 @@ class ConsultationsController < ApplicationController
     @consultation.comorbidities.each do |s|
       ConsultationComorbidity.create!(consultation: c, comorbidity: s)
     end
-
-    c.save!
 
     redirect_to edit_consultation_path(c)
   end
