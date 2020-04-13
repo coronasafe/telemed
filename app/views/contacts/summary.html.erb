@@ -1,4 +1,4 @@
-<% presenter = Contacts::IndexPresenter.new(self) %>
+<% presenter = Contacts::SummaryPresenter.new(self) %>
 
 <% content_for(:head) do %>
   <title><%= presenter.page_title %></title>
@@ -7,8 +7,8 @@
 
 <section>
   <div>
-    <%= link_to "Show Calls", root_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-gray-700 rounded text-white' %>
-    <%= link_to "Show Summary", summary_contacts_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+    <%= link_to "Show Calls", root_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+    <%= link_to "Show Summary", summary_contacts_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-gray-700 rounded text-white' %>
   </div>
   <!--    <h1 class="text-xl font-bold">Generate Reports</h1>-->
 
@@ -29,7 +29,7 @@
         <div class="px-4 py-5 sm:p-6">
           <dl>
             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-              Total Consultations Requests
+              Total Patients
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
               <%= presenter.consultations.count %>
@@ -66,7 +66,7 @@
 </section>
 
 <div class="mt-4">
-  <%= simple_form_for :search, url: root_path, method: "GET" do |f| %>
+  <%= simple_form_for :search, url: summary_contacts_path, method: "GET" do |f| %>
 
     <div class="flex">
       <%= f.input :start_date, label: 'From', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.start_date.to_s }, as: :date, default: Date.today, required: false %>
@@ -82,7 +82,7 @@
     </div>
     <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
 
-    <%= link_to "Reset", root_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
+    <%= link_to "Reset", summary_contacts_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
   <% end %>
 </div>
 <% if params[:search].present? %>
@@ -125,7 +125,7 @@
 <% else %>
   <div class="flex">
     <div class="font-semibold mt-4 text-3xl">
-      Consultations today
+      Summary
     </div>
   </div>
   <div class="mt-4 flex flex-col">
@@ -202,6 +202,7 @@
         </table>
       </div>
     </div>
+
     <!--      hack to get colors-->
     <div class="bg-gray-200 bg-red-200 bg-orange-200 bg-yellow-200 bg-green-200 bg-teal-200 bg-blue-200 bg-indigo-200 bg-purple-200 bg-pink-200">
     </div>

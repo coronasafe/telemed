@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get :make_call, on: :member
     get :generate_non_medical_reqs, on: :collection
     get :generate_medical_reqs, on: :collection
+    get :summary, on: :collection
 
 
     resources :consultations, only: %w[create]
