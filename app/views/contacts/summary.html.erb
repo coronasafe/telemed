@@ -37,30 +37,89 @@
           </dl>
         </div>
       </div>
+    </div>
+  </div>
+  <div>
+    <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-6">
+
       <div class="bg-white overflow-hidden shadow rounded-lg">
         <div class="px-4 py-5 sm:p-6">
           <dl>
             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-              Total Patients
+              Category A
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-              <%= presenter.consultations.pluck(:contact_id).uniq.count %>
+              <%= presenter.consultations.where(category: 'a').count %>
             </dd>
           </dl>
         </div>
       </div>
+
       <div class="bg-white overflow-hidden shadow rounded-lg">
         <div class="px-4 py-5 sm:p-6">
           <dl>
             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-              Follow-ups
+              Category B1
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-              <%= presenter.consultations.count - presenter.consultations.pluck(:contact_id).uniq.count %>
+              <%= presenter.consultations.where(category: 'b1').count %>
             </dd>
           </dl>
         </div>
       </div>
+
+      <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dl>
+            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+              Category B2
+            </dt>
+            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+              <%= presenter.consultations.where(category: 'b2').count %>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dl>
+            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+              Category C
+            </dt>
+            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+              <%= presenter.consultations.where(category: 'c').count %>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dl>
+            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+              uncategorized
+            </dt>
+            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+              <%= presenter.consultations.where(category: 'uncategorized').count %>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dl>
+            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+              Antenatal
+            </dt>
+            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+              <%= presenter.consultations.where(category: 'antenatal').count %>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>

@@ -9,9 +9,7 @@ module Contacts
     end
 
     def consultations
-      c = filter.present? ? filter.includes(:contact, :action).distinct.order(:created_at).reverse : []
-      c_ids = c.group_by(&:contact_id).map { |a| a.second.pluck(:id).last }
-      @consultations ||= Consultation.where(id: c_ids)
+      @consultations ||= filter.present? ? filter.includes(:contact, :action).distinct.order('created_at DESC') : []
     end
 
     def filter
@@ -31,7 +29,8 @@ module Contacts
     end
 
     def scope_by_date
-      assigned_to_me == 'Assigned to Me' ? Consultation.where(created_at: date_window, doctor_id: current_user.id) : Consultation.where(created_at: date_window)
+      c_ids = Consultation.where(created_at: date_window).group_by(&:contact_id).map { |a| a.second.pluck(:id).last }
+      assigned_to_me == 'Assigned to Me' ? Consultation.where(id: c_ids, created_at: date_window, doctor_id: current_user.id) : Consultation.where(id: c_ids, created_at: date_window)
     end
 
     def date_window

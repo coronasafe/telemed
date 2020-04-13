@@ -9,7 +9,7 @@ module Contacts
     end
 
     def consultations
-      @consultations ||= filter.present? ? filter.includes(:contact, :action).distinct.order(:created_at).reverse : []
+      @consultations ||= filter.present? ? filter.includes(:contact, :action).distinct.order('created_at DESC').reverse : []
     end
 
     def filter
