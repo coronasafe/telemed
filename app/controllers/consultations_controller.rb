@@ -31,6 +31,7 @@ class ConsultationsController < ApplicationController
       Comorbidity.where(id: params['consultation']['comorbidity_ids']).each do |s|
         ConsultationComorbidity.create!(consultation: @consultation, comorbidity: s)
       end
+      @consultation.touch
       respond_to do |format|
         format.html { redirect_to @consultation, notice: 'Request was Added Successfully' }
       end
