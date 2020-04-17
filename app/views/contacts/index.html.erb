@@ -125,7 +125,7 @@
 <% else %>
   <div class="flex">
     <div class="font-semibold mt-4 text-3xl">
-      Consultations today
+      Consultations for today
     </div>
   </div>
   <div class="mt-4 flex flex-col">
@@ -172,7 +172,8 @@
                 <%= c.consultation_type %>
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= time_ago_in_words(c.created_at) %> ago
+                <div><%= c&.source&.titleize %></div>
+                <div><%= time_ago_in_words(c.created_at) %> ago</div>
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <%= c.category&.titleize %>

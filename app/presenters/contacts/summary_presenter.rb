@@ -29,7 +29,7 @@ module Contacts
     end
 
     def scope_by_date
-      c_ids = Consultation.where(created_at: date_window).group_by(&:contact_id).map { |a| a.second.pluck(:id).last }
+      c_ids = Consultation.where(created_at: date_window).group_by(&:contact_id).map { |a| a.second.pluck(:id).sort.last }
       assigned_to_me == 'Assigned to Me' ? Consultation.where(id: c_ids, created_at: date_window, doctor_id: current_user.id) : Consultation.where(id: c_ids, created_at: date_window)
     end
 

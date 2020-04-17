@@ -37,7 +37,9 @@ module Contacts
     end
 
     def default_start_date
+      action = Action.find_by(name: 'Complete')
       Time.zone.yesterday.to_date
+      Consultation.where.not(action: action).order(:created_at).first.created_at.to_date
     end
 
     def start_date

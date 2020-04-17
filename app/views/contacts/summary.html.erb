@@ -114,7 +114,7 @@
               Antenatal
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-              <%= presenter.consultations.where(category: 'antenatal').count %>
+              <%= presenter.consultations.where(antenatal: true).count %>
             </dd>
           </dl>
         </div>
