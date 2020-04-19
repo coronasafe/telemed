@@ -223,8 +223,8 @@
   <% @contact.consultations.where.not(id: nil).order(:created_at).reverse.map do |consultation| %>
     <div class="md:w-1/3 w-full p-2">
       <div class="bg-white shadow overflow-hidden  sm:rounded-lg mt-4 p-4 h-full">
-        <div class="mt-4 text-3xl font-semibold">
-          <%= consultation.action&.name %>
+        <div class="mt-4 text-3xl font-semibold px-2 -py-1 rounded shadow bg-<%= @consultation.action.color %>-200">
+          <%= consultation&.action&.name&.titleize %>
         </div>
         <div class="mb-2">
           Requested <%= time_ago_in_words(consultation.created_at) %> ago
