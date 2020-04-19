@@ -80,7 +80,7 @@ module Contacts
         when 'ANC'
           consultations.where(antenatal: true)
         when 'Shifted To Hospital'
-          consultations.where.not(shift_to: nil)
+          consultations.where.not(shift_to: '')
         when 'Prescription Given'
           consultations.where(prescription_given: true)
         when 'Endemic_Area'

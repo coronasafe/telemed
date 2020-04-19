@@ -232,6 +232,7 @@
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <%= time_ago_in_words(c.created_at) %> ago
+                <div class="text-sm"><%= c.created_at.strftime("%m/%d/%Y at %I:%M%p") %></div>
               </td>
               <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <%= c.category&.titleize %>
