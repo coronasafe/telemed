@@ -44,7 +44,11 @@ class ConsultationsController < ApplicationController
   end
 
   def copy
+    action = Action.find_by(name: "Complete")
     c = @consultation.dup
+    pending_action = Action.find_by(name: "Pending")
+    c.action_id = pending_action.id
+    @consultation.update!(action: action)
     c.save!
 
     @consultation.symptoms.each do |s|

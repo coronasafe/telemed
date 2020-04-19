@@ -124,6 +124,7 @@ end
   { name: "Review after 3 days", color: "purple", hour: 72 },
   { name: "Specialist advice required", color: "indigo", hour: 0 },
   { name: "Plan for Home Care", color: "green", hour: 0 },
+  { name: "Complete", color: "green", hour: 0 },
   { name: "Follow up not required", color: "gray", hour: 0 }].each do |d|
   Action.create!(name: d[:name], color: d[:color], hours: d[:hour])
 end

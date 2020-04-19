@@ -17,7 +17,7 @@
   </div>
   <div class="bg-white shadow overflow-hidiven  rounded-lg mt-2 ">
     <div class="flex items-end px-4 py-1 justify-end">
-      <%= link_to '+ Create new follow-up', copy_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+      <%= link_to '+ Complete and Create new follow-up', copy_consultation_path(@consultation), class: 'mt-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
     </div>
     <div class="px-4 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
       <div class="w-full">
@@ -49,7 +49,7 @@
           Request was created by
           <span class="font-bold"><%= @consultation.source %></span> <%= time_ago_in_words(@consultation.created_at) %>
           ago
-        <span class="text-sm">(<%= @consultation.created_at.strftime("%m/%d/%Y at %I:%M%p") %>)</span>
+          <span class="text-sm">(<%= @consultation.created_at.strftime("%m/%d/%Y at %I:%M%p") %>)</span>
         </p>
         <% if @consultation.created_at != @consultation.updated_at %>
           <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
@@ -110,7 +110,9 @@
           <ul>
             <li class="my-2"><span class="font-bold">Status:</span> <span><%= @consultation.current_status %></span>
             </li>
-            <li class="my-2"><span class="font-bold">Category: </span><span class="font-semibold"><%= @consultation.category.titleize %></span></li>
+            <li class="my-2">
+              <span class="font-bold">Category: </span><span class="font-semibold"><%= @consultation.category.titleize %></span>
+            </li>
             <li class="my-2">
               <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
             <li class="my-2">
