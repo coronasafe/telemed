@@ -49,12 +49,14 @@
           Request was created by
           <span class="font-bold"><%= @consultation.source %></span> <%= time_ago_in_words(@consultation.created_at) %>
           ago
+        <span class="text-sm">(<%= @consultation.created_at.strftime("%m/%d/%Y at %I:%M%p") %>)</span>
         </p>
         <% if @consultation.created_at != @consultation.updated_at %>
           <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
             Request was last updated at
             <%= time_ago_in_words(@consultation.updated_at) %>
             ago
+            <span class="text-sm">(<%= @consultation.updated_at.strftime("%m/%d/%Y at %I:%M%p") %>)</span>
           </p>
         <% end %>
         <% if @consultation.doctor_id.present? %>
@@ -114,8 +116,7 @@
             <li class="my-2">
               <span class="font-bold">Endemic: </span><span><%= @consultation.endemic ? "Yes" : "No" %></span></li>
             <li class="my-2">
-              <span class="font-bold">Quarantined: </span><span><%= @consultation.quarantined_on.blank? ? "No" : "Yes, #{time_ago_in_words(@consultation.quarantined_on)}" %>
-              ago</span>
+              <span class="font-bold">Quarantined: </span><span><%= @consultation.quarantined_on.blank? ? "No" : "Yes, #{time_ago_in_words(@consultation.quarantined_on)} ago" %></span>
             </li>
           </ul>
         </div>
@@ -201,7 +202,7 @@
         </div>
         <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
           <p>
-            <%= @consultation.requires_surveillance ? 'Yes' : 'No' %>, <%= @consultation.surveillance %>
+            <%= @consultation.requires_surveillance ? 'Yes, ' : 'No' %> <%= @consultation.surveillance %>
           </p>
         </div>
       </div>
@@ -212,7 +213,7 @@
         </div>
         <div class="w-full md:w-2/3 mt-1 text-sm leading-5 text-gray-900 sm:mt-0">
           <p>
-            <%= @consultation.notes %>
+            <span><%= simple_format(@consultation.notes) %></span>
           </p>
         </div>
       </div>

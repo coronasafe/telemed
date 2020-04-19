@@ -188,6 +188,11 @@
                       added <%= time_ago_in_words(c.updated_at) %> ago
                     </div>
                   <% end %>
+                  <% if c.over_due %>
+                    <div class="px-4 py-1 bg-red-600 text-white w-full font-semibold">
+                      Missed
+                    </div>
+                  <% end %>
                 </div>
               </td>
               <% if current_user.is_admin? %>

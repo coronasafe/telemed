@@ -19,4 +19,18 @@ class Consultation < ApplicationRecord
   belongs_to :action, optional: :true
   has_many :consultation_comorbidity
   has_many :comorbidities, through: :consultation_comorbidity
+
+
+  def over_due
+    action_hours = action.hours
+    if action_hours.zero?
+      false
+    else
+      if (updated_at < (Time.zone.now - action.hours.hours))
+        true
+      else
+        false
+      end
+    end
+  end
 end

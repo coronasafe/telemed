@@ -115,17 +115,17 @@ district = District.find_by(name: "Ernakulam")
 end
 
 [
-  { name: "Pending", color: "white" },
-  { name: "Not reachable ", color: "red" },
-  { name: "Review in 3hrs", color: "pink" },
-  { name: "Review in 8 hrs", color: "orange" },
-  { name: "Review in 12 hrs", color: "yellow" },
-  { name: "Review Tomorrow", color: "blue" },
-  { name: "Review after 3 days", color: "purple" },
-  { name: "Specialist advice required", color: "indigo" },
-  { name: "Plan for Home Care", color: "green" },
-  { name: "Follow up not required", color: "gray" }].each do |d|
-  Action.create!(name: d[:name], color: d[:color])
+  { name: "Pending", color: "white", hour: 0 },
+  { name: "Not reachable ", color: "red", hour: 0 },
+  { name: "Review in 3hrs", color: "pink", hour: 3 },
+  { name: "Review in 8 hrs", color: "orange", hour: 8 },
+  { name: "Review in 12 hrs", color: "yellow", hour: 12 },
+  { name: "Review in 24 hrs", color: "blue", hour: 24 },
+  { name: "Review after 3 days", color: "purple", hour: 72 },
+  { name: "Specialist advice required", color: "indigo", hour: 0 },
+  { name: "Plan for Home Care", color: "green", hour: 0 },
+  { name: "Follow up not required", color: "gray", hour: 0 }].each do |d|
+  Action.create!(name: d[:name], color: d[:color], hours: d[:hour])
 end
 
 ["Fever", "High Grade Fever", "Sore Throat", "Breathlessness", "Cough", "Diarrhoea", "Rhinitis", "Chest Pain", "Hemoptysis", "Cyanosis", "Drowsiness", "ILI with Red flag Signs", "Hypotension", "Others"].each do |d|

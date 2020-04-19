@@ -10,6 +10,7 @@
     <%= f.input :alternate_contact, label: 'Alternate contact number of the patient' %>
     <%= f.input :gender, input_html: { class: 'form-select' }, required: true %>
     <%= f.association :panchayat, collection: Panchayat.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
+    <%= f.input :house_name %>
     <%= f.input :ward %>
     <%= f.input :landmark %>
     <%= f.input :phc, label: 'PHC' %>
