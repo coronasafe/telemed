@@ -34,7 +34,7 @@
           <%= f.input :elderly, label: 'Number of elderly patients', input_html: { class: 'form-select' } %>
         </div>
         <%= f.association :comorbidities, collection: Comorbidity.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select-1' } %>
-        <%= f.input :other_comorbidity, label: 'other comorbidity (optional)', input_html: { class: 'form-select' } %>
+        <%= f.input :other_comorbidity, label: 'Details of comorbidities (optional)', input_html: { class: 'form-select' } %>
 
         <div class="mt-4 text-xl font-semibold">
           Test Details

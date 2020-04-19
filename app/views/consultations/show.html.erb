@@ -110,7 +110,7 @@
           <ul>
             <li class="my-2"><span class="font-bold">Status:</span> <span><%= @consultation.current_status %></span>
             </li>
-            <li class="my-2"><span class="font-bold">Category: </span><span><%= @consultation.category %></span></li>
+            <li class="my-2"><span class="font-bold">Category: </span><span class="font-semibold"><%= @consultation.category.titleize %></span></li>
             <li class="my-2">
               <span class="font-bold">Antenatal: </span><span><%= @consultation.antenatal ? "Yes" : "No" %></span></li>
             <li class="my-2">
