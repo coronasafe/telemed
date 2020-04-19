@@ -79,7 +79,7 @@ module Contacts
       case view.params[:search][:others]
         when 'ANC'
           consultations.where(antenatal: true)
-        when 'Shifted To Hospital'
+        when 'Shift To Hospital'
           consultations.where.not(shift_to: '')
         when 'Prescription Given'
           consultations.where(prescription_given: true)
