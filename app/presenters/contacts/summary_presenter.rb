@@ -9,7 +9,7 @@ module Contacts
     end
 
     def consultations
-      @consultations ||= filter.present? ? filter.includes(:contact, :action).distinct.order('created_at DESC') : Consultation.none
+      @consultations ||= filter.present? ? filter.includes(:contact, :action).distinct.order('consultations.created_at DESC') : Consultation.none
     end
 
     def filter
@@ -38,9 +38,8 @@ module Contacts
     end
 
     def default_start_date
-      action = Action.find_by(name: 'Complete')
-      Time.zone.yesterday.to_date
-      Consultation.where.not(action: action).order(:created_at).first.created_at.to_date
+      action = Action.find_by(name: ["Specialist advice required", "Plan for Home Care", "Follow up not required", "Complete", "Not reachable"])
+      Consultation.where.not(action: action).order(:created_at)&.first&.created_at&.to_date.presence || Time.zone.yesterday.to_date
     end
 
     def start_date

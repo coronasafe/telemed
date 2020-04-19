@@ -8,7 +8,7 @@ class AddTimeForAction < ActiveRecord::Migration[6.0]
     Action.reset_column_information
 
     Action.all.each do |a|
-      a.update!(hours: hours(a))
+      a.update!(hours: hours(a.name))
     end
   end
 
@@ -16,7 +16,7 @@ class AddTimeForAction < ActiveRecord::Migration[6.0]
     case action
       when "Pending"
         0
-      when "Not reachable "
+      when "Not reachable"
         0
       when "Review in 8 hrs"
         8
