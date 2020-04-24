@@ -8,6 +8,9 @@ class ContactsController < ApplicationController
   def summary
   end
 
+  def search
+  end
+
   # GET /contacts/1
   def show
   end

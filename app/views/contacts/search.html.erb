@@ -1,0 +1,98 @@
+<% presenter = Contacts::SearchPresenter.new(self) %>
+
+<% content_for(:head) do %>
+  <title><%= presenter.page_title %></title>
+<% end %>
+
+<section>
+  <div>
+    <%= link_to "Show Calls", contacts_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+    <%= link_to "Show Summary", summary_contacts_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+    <%= link_to "Search", search_path, class: 'mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-gray-700 rounded text-white' %>
+  </div>
+</section>
+
+<div class="mt-4">
+  <%= simple_form_for :text_search, url: search_path, method: "GET", defaults: { input_html: { class: 'form-input input-text mt-1 font-sans' }, wrapper_html: { class: 'p-2 ' }, label_html: { class: 'label' } } do |f| %>
+    <div class="flex flex-col text-left md:flex-row mt-4">
+      <div>
+        <%= f.input :name, label: 'Search by vehicle number', required: false, input_html: { class: 'flex form-select mr-4', value: presenter.text_search_text } %>
+      </div>
+    </div>
+    <div class="flex px-2">
+      <%= f.submit "Search", class: "mr-2 cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-600 text-white mt-4" %>
+      <%= link_to "Reset", root_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
+    </div>
+  <% end %>
+</div>
+<% if params[:search].present? %>
+  <div class="font-semibold mt-4 text-xl">
+    filters Applied
+  </div>
+  <div>
+    <% if presenter.search_test.present? %>
+      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+        Name: <%= presenter.text_search_text %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if presenter.text_search_results.blank? %>
+  <div class="mt-4 text-xl font-semibold px-4 py-6 bg-white shadow rounded">
+    Noting to show, Please try changing the filters
+  </div>
+<% else %>
+  <div class="flex">
+    <div class="font-semibold mt-4 text-3xl">
+      Result
+    </div>
+  </div>
+  <div class="mt-4 flex flex-col">
+    <% presenter.text_search_results.map do |c| %>
+      <%= link_to contact_path(c.id) do %>
+        <div class="bg-white p-4  border border-gray-200 shadow rounded-lg mx-auto my-2">
+          <div>
+            <dl class="grid grid-cols-2 col-gap-2 row-gap-4 sm:grid-cols-5">
+              <div class="sm:col-span-1">
+                <dt class="text-sm leading-5 font-medium text-gray-500">
+                  Name
+                </dt>
+                <dd class="mt-1 text-sm leading-5 text-gray-900">
+                  <%= c.name %>
+                </dd>
+              </div>
+              <div class="sm:col-span-1">
+                <dt class="text-sm leading-5 font-medium text-gray-500">
+                  Number
+                </dt>
+                <dd class="mt-1 text-sm leading-5 text-gray-900">
+                  <%= c.phone %>
+                </dd>
+              </div>
+              <div class="sm:col-span-1">
+                <dt class="text-sm leading-5 font-medium text-gray-500">
+                  Gender
+                </dt>
+                <dd class="mt-1 text-sm leading-5 text-gray-900">
+                  <%= c.gender %>
+                </dd>
+              </div>
+              <div class="sm:col-span-2">
+                <dt class="text-sm leading-5 font-medium text-gray-500">
+                  Panchayat
+                </dt>
+                <dd class="mt-1 text-sm leading-5 text-gray-900">
+                  <%= c.panchayat&.name %>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <!--      hack to get colors-->
+    <div class="bg-gray-200 bg-red-200 bg-orange-200 bg-yellow-200 bg-green-200 bg-teal-200 bg-blue-200 bg-indigo-200 bg-purple-200 bg-pink-200">
+    </div>
+  </div>
+<% end %>

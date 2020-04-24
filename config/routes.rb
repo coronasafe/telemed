@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root 'contacts#summary'
 
+  get 'search', to: 'contacts#search'
+
   get 'find_phone' => "contacts#find_phone"
 
   resources :contacts, except: [:destroy] do
