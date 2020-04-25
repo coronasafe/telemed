@@ -21,7 +21,7 @@ module Contacts
     end
 
     def text_search_entries(name)
-      Contact.where("name LIKE ?", "%#{name.downcase}%")
+      Contact.where("name ILIKE ?", "%#{name.downcase}%")
     end
 
     def text_search_results

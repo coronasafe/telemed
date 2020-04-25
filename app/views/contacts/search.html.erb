@@ -16,7 +16,7 @@
   <%= simple_form_for :text_search, url: search_path, method: "GET", defaults: { input_html: { class: 'form-input input-text mt-1 font-sans' }, wrapper_html: { class: 'p-2 ' }, label_html: { class: 'label' } } do |f| %>
     <div class="flex flex-col text-left md:flex-row mt-4">
       <div>
-        <%= f.input :name, label: 'Search by vehicle number', required: false, input_html: { class: 'flex form-select mr-4', value: presenter.text_search_text } %>
+        <%= f.input :name, label: 'Search by name', required: false, input_html: { class: 'flex form-select mr-4', value: presenter.text_search_text } %>
       </div>
     </div>
     <div class="flex px-2">
