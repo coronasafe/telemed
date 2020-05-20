@@ -28,8 +28,11 @@ module Contacts
       end
     end
 
+    def user_scope
+      current_user.panchayat_admin? ? Consultation.all.joins(:contact).where(contacts: { panchayat_id: current_user.panchayat_id }) : Consultation.all
+    end
     def scope_by_date
-      assigned_to_me == 'Assigned to Me' ? Consultation.where(created_at: date_window, doctor_id: current_user.id) : Consultation.where(created_at: date_window)
+      assigned_to_me == 'Assigned to Me' ? user_scope.where(created_at: date_window, doctor_id: current_user.id) : user_scope.where(created_at: date_window)
     end
 
     def date_window

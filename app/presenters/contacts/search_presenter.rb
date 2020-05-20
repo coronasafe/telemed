@@ -20,8 +20,12 @@ module Contacts
       text_search.try(:[], :name) ? text_search[:name] : ''
     end
 
+    def user_scope
+      current_user.panchayat_admin? ? Contact.where(panchayat_id: current_user.panchayat_id) : Contact.all
+    end
+
     def text_search_entries(name)
-      Contact.where("name ILIKE ?", "%#{name.downcase}%")
+      user_scope.where("name ILIKE ?", "%#{name.downcase}%")
     end
 
     def text_search_results
