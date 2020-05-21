@@ -21,7 +21,7 @@
       </div>
 
       <div class="mt-8">
-        <%= f.association :panchayat, collection: Panchayat.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
+        <%= f.association :panchayat, collection: Panchayat.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' }, required: true %>
         <% if current_user.try(:admin?) %>
           <%= f.input :role, input_html: { class: 'form-select' } %>
         <% elsif current_user.try(:district_admin?) %>
