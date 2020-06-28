@@ -187,8 +187,12 @@ ActiveRecord::Schema.define(version: 2020_06_28_130946) do
     t.string "supplier"
     t.string "delivery_status"
     t.jsonb "medicines"
+    t.bigint "creator_id"
+    t.bigint "contact_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_id"], name: "index_prescriptions_on_contact_id"
+    t.index ["creator_id"], name: "index_prescriptions_on_creator_id"
   end
 
   create_table "symptoms", force: :cascade do |t|
@@ -219,4 +223,5 @@ ActiveRecord::Schema.define(version: 2020_06_28_130946) do
   add_foreign_key "doctors", "users"
   add_foreign_key "medical_reqs", "contacts"
   add_foreign_key "non_medical_reqs", "contacts"
+  add_foreign_key "prescriptions", "contacts"
 end

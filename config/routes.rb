@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     get :summary, on: :collection
 
     resources :consultations, only: %w[create]
+    resources :prescriptions, only: %w[create new]
   end
 
   resources :consultations do
@@ -26,7 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :prescriptions do
+  resources :prescriptions, only: %w[show edit update index] do
 
   end
 end
