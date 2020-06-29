@@ -1,6 +1,8 @@
 class PrescriptionsController < ApplicationController
   def create
     @prescription = Prescription.new(prescription_create_params)
+    @prescription.medicines = JSON.parse(prescription_create_params[:medicines])
+
     respond_to do |format|
       if set_contact.present? && @prescription.save!
         format.html { redirect_to @prescription, notice: "Request was Added Successfully" }
@@ -50,7 +52,7 @@ class PrescriptionsController < ApplicationController
   end
 
   def prescription_create_params
-    params.require(:prescription).permit(:source, :scheme, :supplier, :delivery_status).merge(contact_id: set_contact&.id, creator_id: current_user.id, delivery_status: 'pending')
+    params.require(:prescription).permit(:source, :scheme, :supplier, :delivery_status, :medicines).merge(contact_id: set_contact&.id, creator_id: current_user.id, delivery_status: 'pending')
   end
 
   def prescription_update_params

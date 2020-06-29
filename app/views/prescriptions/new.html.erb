@@ -1,21 +1,29 @@
+<%= stylesheet_pack_tag 'BuilderPack', media: nil %>
 <div class="bg-white shadow overflow-hiden  sm:rounded-lg max-w-3xl mx-auto">
   <div class="px-6 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
     <div class="mt-4 text-3xl font-semibold">
       Add New Prescriptions
     </div>
   </div>
+  <script type="application/json" id="react-root-data">
+    {
+      "prescriptions": []
+    }
+  </script>
   <div class="px-6 py-4 mx-auto">
-    <section class="mt-8 max-w-lg">
-      <%= simple_form_for @prescription, method: :post, url: contact_prescriptions_path(@contact), defaults: { input_html: { class: 'form-input mt-1 font-sans' }, wrapper_html: { class: 'flex flex-col my-4' }, label_html: { class: 'mb-1' } } do |f| %>
+    <%= simple_form_for @prescription, method: :post, url: contact_prescriptions_path(@contact), defaults: { input_html: { class: 'form-input mt-1 font-sans' }, wrapper_html: { class: 'flex flex-col my-4' }, label_html: { class: 'mb-1' } } do |f| %>
+      <section class="mt-8 max-w-lg">
         <%= f.error_notification %>
         <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
         <%= f.input :source, input_html: { class: 'form-select' }, required: true %>
         <%= f.input :scheme, label: 'Scheme (optional)' %>
         <%= f.input :supplier, label: 'Supplier (optional)' %>
-        <span class="inline-flex rounded-md shadow-sm">
+      </section>
+      <div id="react-root"></div>
+      <span class="inline-flex rounded-md shadow-sm">
           <%= f.button :submit, 'Create Prescription', class: 'mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition ease-in-out duration-150' %>
         </span>
-      <% end %>
-    </section>
+    <% end %>
   </div>
 </div>
+<%= javascript_pack_tag 'BuilderPack', nonce: true %>
