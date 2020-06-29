@@ -53,8 +53,10 @@
               <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                 <%= prescription.supplier.titleize %>
               </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-center font-semibold border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <td class="whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 ">
+                <span class="px-4 rounded-lg py-2 font-semibold text-gray-500 bg-<%= prescription.color %>-200">
                 <%= prescription.delivery_status.upcase %>
+                  </span>
               </td>
               <% if current_user.is_admin? %>
                 <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
