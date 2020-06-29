@@ -1,0 +1,14 @@
+<% def is_current_path_classes(path)
+     if path == request.path
+       "mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-gray-700 rounded text-white"
+     else
+       "mt-2 mr-2 inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800"
+     end
+   end
+%>
+<div>
+  <%= link_to "Show Calls", contacts_path, class: is_current_path_classes(contacts_path) %>
+  <%= link_to "Show Summary", root_path, class: is_current_path_classes(root_path) %>
+  <%= link_to "Prescriptions", prescriptions_path, class: is_current_path_classes(prescriptions_path) %>
+  <%= link_to "Search", search_path, class: is_current_path_classes(search_path) %>
+</div>

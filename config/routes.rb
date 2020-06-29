@@ -15,17 +15,8 @@ Rails.application.routes.draw do
     get :generate_medical_reqs, on: :collection
     get :summary, on: :collection
 
-
     resources :consultations, only: %w[create]
-
-    resources :non_medical_reqs do
-      get :fullfill, on: :member
-      get :not_able, on: :member
-    end
-    resources :medical_reqs do
-      get :fullfill, on: :member
-      get :not_able, on: :member
-    end
+    resources :prescriptions, only: %w[create new]
   end
 
   resources :consultations do
@@ -36,4 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :prescriptions, only: %w[show edit update index] do
+
+  end
 end

@@ -3,6 +3,7 @@ class Contact < ApplicationRecord
 
   belongs_to :panchayat
   has_many :consultations
+  has_many :prescriptions
 
   attr_accessor :consultation_type
   attr_accessor :source

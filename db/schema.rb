@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_092820) do
+ActiveRecord::Schema.define(version: 2020_06_28_130946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,20 @@ ActiveRecord::Schema.define(version: 2020_04_17_092820) do
     t.index ["district_id"], name: "index_panchayats_on_district_id"
   end
 
+  create_table "prescriptions", force: :cascade do |t|
+    t.string "source"
+    t.string "scheme"
+    t.string "supplier"
+    t.string "delivery_status"
+    t.jsonb "medicines"
+    t.bigint "creator_id"
+    t.bigint "contact_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_id"], name: "index_prescriptions_on_contact_id"
+    t.index ["creator_id"], name: "index_prescriptions_on_creator_id"
+  end
+
   create_table "symptoms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -209,4 +223,5 @@ ActiveRecord::Schema.define(version: 2020_04_17_092820) do
   add_foreign_key "doctors", "users"
   add_foreign_key "medical_reqs", "contacts"
   add_foreign_key "non_medical_reqs", "contacts"
+  add_foreign_key "prescriptions", "contacts"
 end
