@@ -15,14 +15,33 @@ class PrescriptionsController < ApplicationController
     set_contact
     @prescription = Prescription.new
   end
-
+ 
+  # GET /prescriptions
   def index
     @prescriptions = Prescription.all
   end
 
+  # GET /prescriptions/1
   def show
     @prescription = Prescription.find(params[:id])
   end
+
+# GET /prescriptions/1/edit
+  def edit
+    @prescription = Prescription.find(params[:id])
+  end
+  
+ # PATCH /prescriptions/1 
+    def update
+        @prescription = Prescription.find(params[:id])
+        respond_to do |format|
+            if  @prescription.update!(prescription_update_params)
+              format.html { redirect_to @prescription, notice: 'Prescription was successfully updated.' }
+            else
+              format.html { render :edit }
+            end
+        end
+    end
 
   private
 
@@ -32,5 +51,9 @@ class PrescriptionsController < ApplicationController
 
   def prescription_create_params
     params.require(:prescription).permit(:source, :scheme, :supplier, :delivery_status).merge(contact_id: set_contact&.id, creator_id: current_user.id)
+  end
+  
+  def prescription_update_params
+    params.require(:prescription).permit(:source, :scheme, :supplier, :delivery_status)
   end
 end
