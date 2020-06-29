@@ -1,12 +1,16 @@
 
 
 <div class="bg-white shadow overflow-hidden  sm:rounded-lg max-w-3xl mx-auto">
-  <div class="px-4 py-5 border-b border-gray-200 sm:px-6 flex justify-between items-center">
+  <div class="flex items-end px-4 py-1 justify-end">
+    <%= link_to 'Update Prescription', edit_prescription_path(@prescription), class: 'inline-flex text-bold items-center px-4 py-2 rounded-md text-sm font-medium  shadow leading-5 bg-white rounded text-gray-800' %>
+  </div>
+  <div class="px-4 py-3 border-b border-gray-200 sm:px-6 flex justify-between items-center">
+
     <h3 class="text-3xl font-semibold  leading-6 text-gray-900">
-Prescription    </h3>
-                <div class="mt-4 text-3xl font-semibold px-2 -py-1 rounded shadow bg-yellow-200">
-              <%= @prescription.delivery_status.titleize %>
-            </div>
+      Prescription </h3>
+    <div class=" text-3xl font-semibold px-2 -py-1 rounded shadow bg-yellow-200">
+      <%= @prescription.delivery_status.titleize %>
+    </div>
   </div>
   <div class="px-4 py-5 sm:px-6">
     <dl class="grid grid-cols-1 col-gap-4 row-gap-8 sm:grid-cols-3 ">
@@ -15,14 +19,14 @@ Prescription    </h3>
           Reg No:
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
-           EKM<%= @prescription.contact.id %>        </dd>
+          EKM<%= @prescription.contact.id %>        </dd>
       </div>
       <div class="sm:col-span-1">
         <dt class="text-sm leading-5 font-medium text-gray-500">
           Name
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
-         <%= @prescription.contact.name%>
+          <%= @prescription.contact.name %>
         </dd>
       </div>
       <div class="sm:col-span-1">
@@ -30,16 +34,16 @@ Prescription    </h3>
           Source
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
-         <%= @prescription.source.titleize%>
+          <%= @prescription.source.titleize %>
         </dd>
       </div>
-      
+
       <div class="sm:col-span-1">
         <dt class="text-sm leading-5 font-medium text-gray-500">
           Age
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
-         <%= @prescription.contact.dob%>
+          <%= @prescription.contact.dob %>
         </dd>
       </div>
       <div class="sm:col-span-1">
@@ -47,44 +51,42 @@ Prescription    </h3>
           Gender
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
-         <%= @prescription.contact.gender%>
+          <%= @prescription.contact.gender %>
         </dd>
       </div>
-            <div class="sm:col-span-2">
-       <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+      <div class="sm:col-span-2">
+        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
           Prescription was created by
-          <span class="font-bold"><%= @prescription.creator.name %></span> on 
+          <span class="font-bold"><%= @prescription.creator.name %></span> on
           <span class="text-sm"><%= @prescription.created_at.strftime("%m/%d/%Y at %I:%M%p") %></span>
         </p>
-        </div>
+      </div>
       <div class="sm:col-span-2">
         <dt class="text-sm leading-5 font-medium text-gray-500">
-         Pescription
+          Pescription
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
           JSON
-          </dd>
-      </div>
-          </dl>
-      <div class="flex justify-between mt-4">
-       <div class="">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-            Scheme        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900">
-         <%= @prescription.scheme%>
         </dd>
       </div>
-      
+    </dl>
+    <div class="flex justify-between mt-4">
+      <div class="">
+        <dt class="text-sm leading-5 font-medium text-gray-500">
+          Scheme
+        </dt>
+        <dd class="mt-1 text-sm leading-5 text-gray-900">
+          <%= @prescription.scheme %>
+        </dd>
+      </div>
       <div class="">
         <dt class="text-sm leading-5 font-medium text-gray-500">
           Supplier
         </dt>
         <dd class="mt-1 text-sm leading-5 text-gray-900">
-         <%= @prescription.supplier%>
+          <%= @prescription.supplier %>
         </dd>
       </div>
-      </div>
-      
-
+    </div>
   </div>
 </div>
