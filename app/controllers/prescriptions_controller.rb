@@ -17,6 +17,7 @@ class PrescriptionsController < ApplicationController
   end
 
   def index
+    @prescriptions = Prescription.all
   end
 
   def show

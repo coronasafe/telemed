@@ -1,11 +1,79 @@
-<h1>HEY</h1>
-<div class="bg-white shadow overflow-hidiven  sm:rounded-lg max-w-3xl mx-auto">
-  <div class="px-6 py-5 border-b border-gray-200 flex flex-col items-between justify-center  lg:flex-row lg:items-center lg:justify-between sm:px-6">
-    <div class="mt-4 text-3xl font-semibold">
-      New Patient
+<section>
+  <div class="flex">
+    <div class="font-semibold mt-4 text-3xl">
+      Summary
     </div>
   </div>
-  <div class="px-6 py-4 mx-auto">
-    <%# <%= render 'form', contact: @contact %> %>
-  </div>
-</div>
+  <div class="mt-4 flex flex-col">
+    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+        <table class="min-w-full">
+          <thead>
+          <tr>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Reg No
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Name
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Source
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Scheme
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Supplier
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Delivery Status
+            </th>
+            <% if current_user.is_admin? %>
+              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                view
+              </th>
+            <% end %>
+          </tr>
+          </thead>
+
+          <tbody class="bg-white">
+              <% @prescriptions.each do |prescription| %>
+                <tr class="hover:text-gray-100 cursor-pointer">
+                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
+                    EKM<%=prescription.contact.id%>
+                  </td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
+                    <%= link_to "#{prescription.contact.name}", contact_path(prescription.contact) %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+                    <%= prescription.source.titleize %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+                    <%= prescription.scheme.titleize %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+                    <%= prescription.supplier.titleize %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-center font-semibold border-b border-gray-200 text-sm leading-5 text-gray-500">
+                    <%= prescription.delivery_status.upcase %>
+                  </td>
+                  <% if current_user.is_admin? %>
+                    <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+                      <span>
+                        <%= link_to 'View', prescription_path(prescription) %>
+                      </span>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+
+
+          </tbody>
+         
+         
+        </table>
+      </div>
+    </div>
+    </div>
+  </section>
+
