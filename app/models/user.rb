@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable
 
-  enum role: { phone_caller: "phone_caller", panchayat_admin: "panchayat_admin", district_admin: "district_admin", doctor: "doctor", admin: "admin" }
-  enum source: { ima: 'ima', deoc: "deoc", police: "police", private_hospital: "private_hospital", migrant_project: "migrant_project", medical_practitioner: "medical_practitioner", lsg: "lsg" }
+  enum role: { phone_caller: "phone_caller", pharmacist: "pharmacist", panchayat_admin: "panchayat_admin", district_admin: "district_admin", doctor: "doctor", admin: "admin" }
+  enum source: { ima: 'ima', deoc: "deoc", police: "police", telemedicine_control_room: "telemedicine_control_room", private_hospital: "private_hospital", migrant_project: "migrant_project", medical_practitioner: "medical_practitioner", lsg: "lsg" }
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
