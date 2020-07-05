@@ -5,14 +5,17 @@
     </div>
   </div>
   <div class="px-6 py-4 mx-auto">
+    <%= render 'show_medicines', medicines: @prescription.medicines %>
     <section class="mt-8 max-w-lg">
-      <%= simple_form_for @prescription, defaults: {input_html: {class: 'form-input mt-1 font-sans'}, wrapper_html: {class: 'flex flex-col my-4'}, label_html: {class: 'mb-1'}} do |f| %>
+      <%= simple_form_for @prescription, defaults: { input_html: { class: 'form-input mt-1 font-sans' }, wrapper_html: { class: 'flex flex-col my-4' }, label_html: { class: 'mb-1' } } do |f| %>
         <%= f.error_notification %>
         <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-        <%= f.input :source, input_html: {class: 'form-select'}, required: true %>
-        <%= f.input :scheme, required: true, label: 'Scheme' %>
+        <%= f.input :source, input_html: { class: 'form-select' }, required: true %>
+        <%= f.input :scheme, required: true, label: 'Scheme', input_html: { class: 'form-select' } %>
         <%= f.input :supplier, required: true, label: 'Supplier' %>
-        <%= f.input :delivery_status, input_html: {class: 'form-select'}, required: true %>
+        <%= f.input :remarks, label: 'Remarks' %>
+        <%= f.input :comments, label: 'Comments' %>
+        <%= f.input :delivery_status, input_html: { class: 'form-select' }, required: true %>
 
         <span class="inline-flex rounded-md shadow-sm">
         <%= f.button :submit, 'Update Prescription', class: 'mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition ease-in-out duration-150' %>
