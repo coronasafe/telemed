@@ -42,7 +42,7 @@ module Contacts
     end
 
     def default_start_date
-      actions = Action.where(name: ["Specialist advice required", "Plan for Home Care", "Follow up not required", "Complete", "Not reachable"])
+      actions = Action.where(name: ["Specialist advice required", "Plan for Home Care", "Follow up not required", "Complete", "Not reachable", "Not reachable "])
       Consultation.where.not(action: actions).order(:created_at)&.first&.created_at&.to_date.presence || Time.zone.yesterday.to_date
     end
 
