@@ -61,6 +61,7 @@
               <% if current_user.is_admin? %>
                 <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
                   <%= link_to 'View', prescription_path(prescription) %>
+                  <%= link_to 'Print', prescription_print_path(prescription), class: 'ml-2' %>
                 </td>
               <% end %>
             </tr>

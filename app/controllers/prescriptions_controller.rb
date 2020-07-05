@@ -28,6 +28,10 @@ class PrescriptionsController < ApplicationController
     @prescription = Prescription.find(params[:id])
   end
 
+  def print
+    @prescription = Prescription.find(params[:prescription_id])
+  end
+
   # GET /prescriptions/1/edit
   def edit
     @prescription = Prescription.find(params[:id])

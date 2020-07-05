@@ -28,6 +28,6 @@ Rails.application.routes.draw do
   end
 
   resources :prescriptions, only: %w[show edit update index] do
-
+    get 'print'
   end
 end
