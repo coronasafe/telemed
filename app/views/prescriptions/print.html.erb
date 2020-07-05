@@ -1,8 +1,9 @@
 <% @skip_header = true %>
 <div class="mt-4 bg-white shadow overflow-hidden  sm:rounded-lg max-w-3xl mx-auto">
   <div class="px-4 py-3 border-b border-gray-200 sm:px-6 text-center">
-    <h1 class="font-semibolsd text-3xl">COVID-19 CONTROL CELL</h1>
-    <h2 class="font-semisbold text-2xl">TELEMEDICINE – COMMUNITY PHARMACY</h2>
+    <%= image_tag 'https://cdn.coronasafe.network/coronaSafeLogo.png', class: 'h-12 mx-auto' %>
+    <h2 class="font-semisbold text-2xl">TELEMEDICINE | COMMUNITY PHARMACY</h2>
+    <div class="-mt-2 font-semibold">telemedicine.coronasafe.network</div>
     <h3 class="text-3xl font-semibold  leading-6 text-gray-900 mt-4">
       PRESCRIPTION
     </h3>
@@ -60,26 +61,46 @@
     </dl>
     <%= render 'show_medicines', medicines: @prescription.medicines %>
     <div class="flex justify-between">
-      <div class="sm:col-span-2 mt-4 w-1/3">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-          Remarks
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900">
-          <%= @prescription.remarks %>
-        </dd>
+      <div class="w-1/2">
+        <div class="sm:col-span-2 mt-4 w-1/3">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Remarks
+          </dt>
+          <dd class="mt-1 text-sm leading-5 text-gray-900">
+            <%= @prescription.remarks %>
+          </dd>
+        </div>
+        <div class="w-1/3">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Prescribed By
+          </dt>
+          <dd class="mt-1 text-sm leading-5 text-gray-900b font-bold">
+            <%= @prescription.creator.name %>
+          </dd>
+        </div>
+
+        <div class="pt-24">
+          <div><span class="font-semibold">Printed At:</span>  <%= Time.zone.now %></div>
+          <div><span class="font-semibold">Printed by:</span> <%= current_user.name %></div>
+        </div>
       </div>
+      <div class="md:w-1/2 flex items-center px-4 mt-6 justify-center">
+        <%
+          qrcode = RQRCode::QRCode.new("#{verify_prescription_public_url}?prescription_id=#{@prescription.id}")
+          # With default options specified explicitly
+          svg = qrcode.as_svg(offset: 0, color: '000',
+            shape_rendering: 'crispEdges',
+            module_size: 5,
+            standalone: true)
+        %>
+
+        <%= raw svg %>
+      </div>
+
     </div>
-    <div class="flex justify-between mt-4">
-      <div class="w-1/3">
-        <dt class="text-sm leading-5 font-medium text-gray-500">
-          Prescribed By
-        </dt>
-        <dd class="mt-1 text-sm leading-5 text-gray-900b font-bold">
-          <%= @prescription.creator.name %>
-        </dd>
-      </div>
-      <div class="p-24">
-      </div>
+
+    <div class="text-xs mt-6 text-center">
+      Link to verify <%= "#{verify_prescription_public_url}?prescription_id=#{@prescription.id}" %>
     </div>
   </div>
 </div>

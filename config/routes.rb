@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :prescriptions, only: %w[create new]
   end
 
+  get 'verify_prescription', to: 'verifications#prescription', as: 'verify_prescription_public'
+
   resources :consultations do
     get :versions, on: :member
     get :copy, on: :member
