@@ -1,10 +1,63 @@
+<% presenter = Prescriptions::IndexPresenter.new(self) %>
 <section>
   <%= render 'layouts/breadcrumbs' %>
-  <div class="flex">
-    <div class="font-semibold mt-4 text-3xl">
-      Summary
+  <div class="mt-8">
+    <h3 class="font-bold text-xl">Prescription Dashboard</h3>
+    <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dl>
+            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+              Total Prescriptions
+            </dt>
+            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+              <%= presenter.prescriptions.count %>
+            </dd>
+          </dl>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="mt-4">
+    <%= simple_form_for :search, url: prescriptions_path, method: "GET" do |f| %>
+
+      <div class="flex">
+        <%= f.input :start_date, label: 'From', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.start_date.to_s }, as: :date, default: Date.today, required: false %>
+        <%= f.input :end_date, label: 'To', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.end_date.to_s }, as: :date, default: Date.today, required: false %>
+      </div>
+      <div class="flex mt-4 flex-col md:flex-row">
+        <%= f.input :source, label: 'Source', input_html: { class: 'flex form-select mr-4' }, collection: Prescription.sources, required: false %>
+        <%= f.input :scheme, label: 'Scheme', input_html: { class: 'flex form-select mr-4' }, collection: Prescription.schemes, required: false %>
+        <%= f.input :delivery_status, label: 'Delivery Status', input_html: { class: 'flex form-select mr-4' }, collection: Prescription.delivery_statuses, required: false %>
+      </div>
+      <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
+
+      <%= link_to "Reset", prescriptions_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
+    <% end %>
+  </div>
+  <% if params[:search].present? %>
+    <div class="font-semibold mt-4 text-xl">
+      filters Applied
+    </div>
+    <div>
+      <% if params[:search][:source].present? %>
+        <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+          Source: <%= params[:search][:source] %>
+        </div>
+      <% end %>
+      <% if params[:search][:delivery_status].present? %>
+        <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+          Source: <%= params[:search][:delivery_status] %>
+        </div>
+      <% end %>
+      <% if params[:search][:scheme].present? %>
+        <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+          Source: <%= params[:search][:scheme] %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
   <div class="mt-4 flex flex-col">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
       <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -36,7 +89,7 @@
           </thead>
 
           <tbody class="bg-white">
-          <% @prescriptions.each do |prescription| %>
+          <% presenter.filter.each do |prescription| %>
             <tr class="hover:text-gray-100 cursor-pointer">
               <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
                 EKM<%= prescription.contact.id %>
