@@ -1,14 +1,18 @@
 <% @skip_header = true %>
 <div class="mt-4 bg-white shadow overflow-hidden  sm:rounded-lg max-w-3xl mx-auto">
-  <div class="px-4 py-3 border-b border-gray-200 sm:px-6 text-center">
-    <%= image_tag 'https://cdn.coronasafe.network/coronaSafeLogo.png', class: 'h-12 mx-auto' %>
-    <h2 class="font-semisbold text-2xl">TELEMEDICINE | COMMUNITY PHARMACY</h2>
+  <div class="px-4 py-1 border-b border-gray-200 sm:px-6 text-center">
+    <div class="flex justify-between">
+      <%= image_tag 'https://cdn.coronasafe.network/nhm.jpg', class: 'h-16' %>
+      <%= image_tag 'https://cdn.coronasafe.network/coronaSafeLogo.png', class: 'h-12 ' %>
+    </div>
+
+    <h2 class="font-semisbold text-2xl -mt-4">TELEMEDICINE | COMMUNITY PHARMACY</h2>
     <div class="-mt-2 font-semibold">telemedicine.coronasafe.network</div>
-    <h3 class="text-3xl font-semibold  leading-6 text-gray-900 mt-4">
+    <h3 class="text-3xl font-semibold  leading-6 text-gray-900 my-1">
       PRESCRIPTION
     </h3>
   </div>
-  <div class="px-4 py-5 sm:px-6">
+  <div class="px-4 sm:px-6">
     <dl class="flex flex-row flex-wrap">
       <div class="w-1/3 mt-4">
         <dt class="text-sm leading-5 font-medium text-gray-500">
@@ -79,7 +83,7 @@
           </dd>
         </div>
 
-        <div class="pt-24">
+        <div class="pt-4">
           <div><span class="font-semibold">Printed At:</span>  <%= Time.zone.now %></div>
           <div><span class="font-semibold">Printed by:</span> <%= current_user.name %></div>
         </div>
@@ -90,10 +94,9 @@
           # With default options specified explicitly
           svg = qrcode.as_svg(offset: 0, color: '000',
             shape_rendering: 'crispEdges',
-            module_size: 5,
+            module_size: 2,
             standalone: true)
         %>
-
         <%= raw svg %>
       </div>
 
