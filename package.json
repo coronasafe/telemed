@@ -2,7 +2,7 @@
   "name": "daksha",
   "private": true,
   "dependencies": {
-    "@coronasafe/prescription-builder": "^0.1.10",
+    "@coronasafe/prescription-builder": "^0.1.11",
     "@fullhuman/postcss-purgecss": "^2.1.0",
     "@glennsl/bs-json": "^5.0.1",
     "@rails/actioncable": "^6.0.0",
