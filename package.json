@@ -19,7 +19,8 @@
     "tailwindcss": "^1.4.6",
     "turbolinks": "^5.2.0",
     "gentype": "^3.27.0",
-    "bs-platform": "8.0.3"
+    "bs-platform": "8.0.3",
+    "snyk": "^1.363.0"
   },
   "version": "0.1.0",
   "devDependencies": {
@@ -28,6 +29,9 @@
   "scripts": {
     "postinstall": "yarn run re:build",
     "re:build": "bsb -make-world -clean-world",
-    "re:watch": "bsb -make-world -clean-world -w"
-  }
+    "re:watch": "bsb -make-world -clean-world -w",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
+  },
+  "snyk": true
 }
