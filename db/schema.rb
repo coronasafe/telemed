@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_175437) do
+ActiveRecord::Schema.define(version: 2020_07_20_185657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,9 +119,11 @@ ActiveRecord::Schema.define(version: 2020_07_20_175437) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "requires_surveillance"
     t.string "other_comorbidity"
+    t.bigint "district_id"
     t.index ["action_id"], name: "index_consultations_on_action_id"
     t.index ["contact_id"], name: "index_consultations_on_contact_id"
     t.index ["creator_id"], name: "index_consultations_on_creator_id"
+    t.index ["district_id"], name: "index_consultations_on_district_id"
     t.index ["doctor_id"], name: "index_consultations_on_doctor_id"
   end
 
@@ -219,8 +221,10 @@ ActiveRecord::Schema.define(version: 2020_07_20_175437) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "remarks"
     t.text "comments"
+    t.bigint "district_id"
     t.index ["contact_id"], name: "index_prescriptions_on_contact_id"
     t.index ["creator_id"], name: "index_prescriptions_on_creator_id"
+    t.index ["district_id"], name: "index_prescriptions_on_district_id"
   end
 
   create_table "symptoms", force: :cascade do |t|
