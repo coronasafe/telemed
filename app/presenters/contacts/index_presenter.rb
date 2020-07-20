@@ -31,6 +31,7 @@ module Contacts
     def user_scope
       current_user.panchayat_admin? ? Consultation.all.joins(:contact).where(contacts: { panchayat_id: current_user.panchayat_id }) : Consultation.all
     end
+
     def scope_by_date
       assigned_to_me == 'Assigned to Me' ? user_scope.where(created_at: date_window, doctor_id: current_user.id) : user_scope.where(created_at: date_window)
     end
@@ -40,8 +41,8 @@ module Contacts
     end
 
     def default_start_date
-      actions = Action.where(name: ["Specialist advice required", "Plan for Home Care", "Follow up not required", "Complete", "Not reachable"])
-      Consultation.where.not(action: actions).order(:created_at)&.first&.created_at&.to_date.presence || Time.zone.yesterday.to_date
+      actions = Action.where.not(hours: 0)
+      Consultation.where(action: actions).order(:created_at)&.first&.created_at&.to_date.presence || Time.zone.yesterday.to_date
     end
 
     def start_date
