@@ -772,10 +772,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@coronasafe/prescription-builder@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@coronasafe/prescription-builder/-/prescription-builder-0.1.10.tgz#e571ce02e8fc7c677b7c45b8272d5f3d3724f472"
-  integrity sha512-GUI7obfR83XWA9UTZDzXLF3CkXntmMAihUEmBN9S4bq3iLqAW8mVTe7Ul10NO45Rp73TzzaSEBpDtQ0G3Gen7Q==
+"@coronasafe/prescription-builder@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@coronasafe/prescription-builder/-/prescription-builder-0.1.13.tgz#bcc3e41cf23562abb95ed656701ae3a4f3e3ccfb"
+  integrity sha512-vw7EWls5KRcaZ+S3Ivf77txFimJNSBAYXZ/UAVpvoV+XRKyQiWTeMR0ntvvyS6cWvSUzlZ5KCpX7EsMBsPr/Gg==
   dependencies:
     "@glennsl/bs-json" "^5.0.2"
     bs-webapi "^0.16.1"
@@ -3254,6 +3254,11 @@ gensync@^1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.1.tgz#58f4361ff987e5ff6e1e7a210827aa371eaac269"
   integrity sha512-r8EC6NO1sngH/zdD9fiRDLdcgnbayXah+mLgManTaIZJqEC1MZstmnox8KpnI2/fxQwrp5OpCOYWLp4rBl4Jcg==
+
+gentype@^3.27.0:
+  version "3.27.0"
+  resolved "https://registry.yarnpkg.com/gentype/-/gentype-3.27.0.tgz#407aad74af94cf455bf471dedd32499aa27095ff"
+  integrity sha512-bHZ6R+FHecYynjC4JPKpUo4nqVxNJZCfeGggGVDXmlgZY+JPfcI//fOB5llD2o+++Srl2xrflOdqyfqg0hlXPw==
 
 get-caller-file@^1.0.1:
   version "1.0.3"

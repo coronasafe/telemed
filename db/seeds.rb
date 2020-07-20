@@ -138,3 +138,5 @@ end
   "Immunocompromised", "Autoimmune diseases", "Pregnant", ">60years", "Long term steroid use", "Others"].each do |c|
   Comorbidity.create!(name: c)
 end
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
