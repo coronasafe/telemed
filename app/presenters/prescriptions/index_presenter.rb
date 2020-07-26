@@ -29,7 +29,7 @@ module Prescriptions
     end
 
     def scope_by_date
-      Prescription.where(created_at: date_window)
+      Prescription.where(created_at: date_window, district_id: current_user.panchayat.district.id)
     end
 
     def default_start_date

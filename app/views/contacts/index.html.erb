@@ -1,7 +1,7 @@
 <% presenter = Contacts::IndexPresenter.new(self) %>
 
 <% content_for(:head) do %>
-  <title><%= presenter.page_title %></title>
+<title><%= presenter.page_title %></title>
 <% end %>
 
 
@@ -65,71 +65,71 @@
 <div class="mt-4">
   <%= simple_form_for :search, url: root_path, method: "GET" do |f| %>
 
-    <div class="md:flex">
-      <%= f.input :start_date, label: 'From', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.start_date.to_s }, as: :date, default: Date.today, required: false %>
-      <%= f.input :end_date, label: 'To', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.end_date.to_s }, as: :date, default: Date.today, required: false %>
-      <%= f.input :assigned, label: 'Assigned', input_html: { class: 'flex form-select mr-4' }, selected: presenter.assigned_to_me, collection: ['Assigned to Me', 'Show All'], required: true %>
-    </div>
-    <div class="flex mt-4 flex-col md:flex-row">
-      <%= f.input :actions, label: 'Status', input_html: { class: 'flex form-select mr-4' }, collection: Action.all, required: false %>
-      <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories.keys.map { |a| [a.titleize, a] }, required: false %>
-      <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.test_statuses, required: false %>
-      <%= f.input :current_status, label: 'Belongs to', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.current_statuses, required: false %>
-      <%= f.input :others, label: '', input_html: { class: 'flex form-select mr-4' }, collection: ['ANC', 'Shift To Hospital', 'Prescription Given', 'Quarantined', 'New'], required: false %>
-    </div>
-    <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
+  <div class="md:flex">
+    <%= f.input :start_date, label: 'From', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.start_date.to_s }, as: :date, default: Date.today, required: false %>
+    <%= f.input :end_date, label: 'To', class: 'flex', html5: true, input_html: { class: 'flex form-select mr-4', value: presenter.end_date.to_s }, as: :date, default: Date.today, required: false %>
+    <%= f.input :assigned, label: 'Assigned', input_html: { class: 'flex form-select mr-4' }, selected: presenter.assigned_to_me, collection: ['Assigned to Me', 'Show All'], required: true %>
+  </div>
+  <div class="flex mt-4 flex-col md:flex-row">
+    <%= f.input :actions, label: 'Status', input_html: { class: 'flex form-select mr-4' }, collection: Action.all, required: false %>
+    <%= f.input :category, label: 'Category', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.categories.keys.map { |a| [a.titleize, a] }, required: false %>
+    <%= f.input :test_status, label: 'Test Status', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.test_statuses, required: false %>
+    <%= f.input :current_status, label: 'Belongs to', input_html: { class: 'flex form-select mr-4' }, collection: Consultation.current_statuses, required: false %>
+    <%= f.input :others, label: '', input_html: { class: 'flex form-select mr-4' }, collection: ['ANC', 'Shift To Hospital', 'Prescription Given', 'Quarantined', 'New'], required: false %>
+  </div>
+  <%= f.submit "Search", class: "cursor-pointer rounded shadow inline-block px-2 py-1 bg-indigo-700 text-white mt-4" %>
 
-    <%= link_to "Reset", root_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
+  <%= link_to "Reset", root_path, class: 'bg-white cursor-pointer rounded shadow inline-block px-2 py-1 mt-4' %>
   <% end %>
 </div>
 <% if params[:search].present? %>
-  <div class="font-semibold mt-4 text-xl">
-    filters Applied
+<div class="font-semibold mt-4 text-xl">
+  filters Applied
+</div>
+<div>
+  <% if params[:search][:actions].present? %>
+  <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+    Actions: <%= Action.where(id: params[:search][:actions]).pluck(:name).join(', ') %>
   </div>
-  <div>
-    <% if params[:search][:actions].present? %>
-      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
-        Actions: <%= Action.where(id: params[:search][:actions]).pluck(:name).join(', ') %>
-      </div>
-    <% end %>
-    <% if presenter.search_category.present? %>
-      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
-        Category: <%= presenter.search_category %>
-      </div>
-    <% end %>
-    <% if presenter.search_test.present? %>
-      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
-        Test Status: <%= presenter.search_test %>
-      </div>
-    <% end %>
-    <% if presenter.search_current_status.present? %>
-      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
-        Belongs to: <%= presenter.search_current_status %>
-      </div>
-    <% end %>
-    <% if presenter.search_others.present? %>
-      <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
-        Others: <%= presenter.search_others %>
-      </div>
-    <% end %>
+  <% end %>
+  <% if presenter.search_category.present? %>
+  <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+    Category: <%= presenter.search_category %>
   </div>
+  <% end %>
+  <% if presenter.search_test.present? %>
+  <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+    Test Status: <%= presenter.search_test %>
+  </div>
+  <% end %>
+  <% if presenter.search_current_status.present? %>
+  <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+    Belongs to: <%= presenter.search_current_status %>
+  </div>
+  <% end %>
+  <% if presenter.search_others.present? %>
+  <div class="p-1 bg-white rounded-md inline-block shadow text-sm text-gray-700 mr-2">
+    Others: <%= presenter.search_others %>
+  </div>
+  <% end %>
+</div>
 <% end %>
 
 <% if presenter.consultations.blank? %>
-  <div class="mt-4 text-xl font-semibold px-4 py-6 bg-white shadow rounded">
-    Noting to show, Please try changing the filters
-  </div>
+<div class="mt-4 text-xl font-semibold px-4 py-6 bg-white shadow rounded">
+  Noting to show, Please try changing the filters
+</div>
 <% else %>
-  <div class="flex">
-    <div class="font-semibold mt-4 text-3xl">
-      Consultations for today
-    </div>
+<div class="flex">
+  <div class="font-semibold mt-4 text-3xl">
+    Consultations for today
   </div>
-  <div class="mt-4 flex flex-col">
-    <div class="-my-2 py-2 overflow-x-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-        <table class="min-w-full">
-          <thead>
+</div>
+<div class="mt-4 flex flex-col">
+  <div class="-my-2 py-2 overflow-x-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+    <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+      <table class="min-w-full">
+        <thead>
           <tr>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               ID
@@ -150,64 +150,64 @@
               Status
             </th>
             <% if current_user.is_admin? %>
-              <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                view
-              </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              view
+            </th>
             <% end %>
           </tr>
-          </thead>
-          <tbody class="bg-white">
+        </thead>
+        <tbody class="bg-white">
           <% presenter.consultations.each do |c| %>
-            <tr class="hover:text-gray-100 cursor-pointer">
-              <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
-                <%= link_to "EKM#{c.contact.id}", consultation_path(c) %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
-                <%= link_to c.contact.name, contact_path(c.contact), class: 'mr-2 font-medium' %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= c.consultation_type %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <div><%= c&.source&.titleize %></div>
-                <div><%= time_ago_in_words(c.created_at) %> ago</div>
-                <div class="text-sm"><%= c.created_at.strftime("%m/%d/%Y at %I:%M%p") %></div>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <%= c.category&.titleize %>
-              </td>
-              <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <div class="flex flex-col items-start">
-                  <div class="<%= "bg-#{c.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
-                    <%= c.action&.name %>
-                  </div>
-                  <% unless c.action&.name == "Pending" %>
-                    <div class="text-sm mt-2">
-                      added <%= time_ago_in_words(c.updated_at) %> ago
-                    </div>
-                  <% end %>
-                  <% if c.over_due %>
-                    <div class="px-4 py-1 bg-red-600 text-white w-full font-semibold">
-                      Missed
-                    </div>
-                  <% end %>
+          <tr class="hover:text-gray-100 cursor-pointer">
+            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
+              <%= link_to "#{c.contact.uid}", consultation_path(c) %>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
+              <%= link_to c.contact.name, contact_path(c.contact), class: 'mr-2 font-medium' %>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <%= c.consultation_type %>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <div><%= c&.source&.titleize %></div>
+              <div><%= time_ago_in_words(c.created_at) %> ago</div>
+              <div class="text-sm"><%= c.created_at.strftime("%m/%d/%Y at %I:%M%p") %></div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <%= c.category&.titleize %>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <div class="flex flex-col items-start">
+                <div class="<%= "bg-#{c.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
+                  <%= c.action&.name %>
                 </div>
-              </td>
-              <% if current_user.is_admin? %>
-                <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-                <span>
-                  <%= link_to 'View', consultation_path(c), class: 'mr-2 font-medium' %>
-                </span>
-                </td>
-              <% end %>
-            </tr>
+                <% unless c.action&.name == "Pending" %>
+                <div class="text-sm mt-2">
+                  added <%= time_ago_in_words(c.updated_at) %> ago
+                </div>
+                <% end %>
+                <% if c.over_due %>
+                <div class="px-4 py-1 bg-red-600 text-white w-full font-semibold">
+                  Missed
+                </div>
+                <% end %>
+              </div>
+            </td>
+            <% if current_user.is_admin? %>
+            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <span>
+                <%= link_to 'View', consultation_path(c), class: 'mr-2 font-medium' %>
+              </span>
+            </td>
+            <% end %>
+          </tr>
           <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!--      hack to get colors-->
-    <div class="bg-gray-200 bg-red-200 bg-orange-200 bg-yellow-200 bg-green-200 bg-teal-200 bg-blue-200 bg-indigo-200 bg-purple-200 bg-pink-200">
+        </tbody>
+      </table>
     </div>
   </div>
+  <!--      hack to get colors-->
+  <div class="bg-gray-200 bg-red-200 bg-orange-200 bg-yellow-200 bg-green-200 bg-teal-200 bg-blue-200 bg-indigo-200 bg-purple-200 bg-pink-200">
+  </div>
+</div>
 <% end %>

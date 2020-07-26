@@ -33,7 +33,8 @@ module Contacts
     end
 
     def scope_by_date
-      assigned_to_me == 'Assigned to Me' ? user_scope.where(created_at: date_window, doctor_id: current_user.id) : user_scope.where(created_at: date_window)
+      scope = user_scope.where(district_id: current_user.panchayat.district.id, created_at: date_window)
+      assigned_to_me == 'Assigned to Me' ? scope.where(doctor_id: current_user.id) : scope
     end
 
     def date_window
@@ -42,8 +43,10 @@ module Contacts
 
     def default_start_date
       actions = Action.where.not(hours: 0)
-      Consultation.where(action: actions).order(:created_at)&.first&.created_at&.to_date.presence || Time.zone.yesterday.to_date
+      x = Consultation.where(action: actions).order(:created_at)&.first&.created_at&.to_date.presence || Time.zone.yesterday.to_date
+      x < 3.days.ago ? 3.days.ago.to_date : x
     end
+
 
     def start_date
       @start_date ||= view.params[:search].try(:[], :start_date) ? view.params[:search][:start_date].to_date : default_start_date

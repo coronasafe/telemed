@@ -56,7 +56,7 @@ class PrescriptionsController < ApplicationController
   end
 
   def prescription_create_params
-    params.require(:prescription).permit(:source, :scheme, :supplier, :remarks, :delivery_status, :medicines).merge(contact_id: set_contact&.id, creator_id: current_user.id, delivery_status: 'pending')
+    params.require(:prescription).permit(:source, :scheme, :supplier, :remarks, :delivery_status, :medicines).merge(contact_id: set_contact&.id, creator_id: current_user.id, delivery_status: 'pending', district_id: current_user.panchayat.district.id)
   end
 
   def prescription_update_params

@@ -93,4 +93,18 @@ class Contact < ApplicationRecord
       end
     end
   end
+
+  def district_id
+    if panchayat.district.name.downcase == "kottayam"
+      "KTM"
+    elsif panchayat.district.name.downcase == "ernakulam"
+      "EKM"
+    else
+      "KL"
+    end
+  end
+
+  def uid
+    "#{district_id}#{id}"
+  end
 end

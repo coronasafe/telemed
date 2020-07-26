@@ -49,7 +49,15 @@
       <%= link_to contact_path(c.id) do %>
         <div class="bg-white p-4  border border-gray-200 shadow rounded-lg mx-auto my-2">
           <div>
-            <dl class="grid grid-cols-2 col-gap-2 row-gap-4 sm:grid-cols-5">
+            <dl class="grid grid-cols-2 col-gap-2 row-gap-4 sm:grid-cols-6">
+              <div class="sm:col-span-1">
+                <dt class="text-sm leading-5 font-medium text-gray-500">
+                  Name
+                </dt>
+                <dd class="mt-1 text-sm leading-5 text-gray-900">
+                  <%= c.uid %>
+                </dd>
+              </div>
               <div class="sm:col-span-1">
                 <dt class="text-sm leading-5 font-medium text-gray-500">
                   Name

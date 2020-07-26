@@ -9,7 +9,7 @@
     <%= f.input :phone, required: true, label: 'Enter the Whatsapp number of the patient' %>
     <%= f.input :alternate_contact, label: 'Alternate contact number of the patient' %>
     <%= f.input :gender, input_html: { class: 'form-select' }, required: true %>
-    <%= f.association :panchayat, collection: Panchayat.all(), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
+    <%= f.association :panchayat, collection: Panchayat.all.where(district_id: current_user.panchayat.district.id), input_html: { class: 'form-select', id: 'dropdown-choice-select' } %>
     <%= f.input :house_name %>
     <%= f.input :ward %>
     <%= f.input :landmark %>
