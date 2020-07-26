@@ -5,7 +5,7 @@ class AddPanchayathForAllUsers < ActiveRecord::Migration[6.0]
       next if u.panchayat_id.present?
 
       u.panchayat_id = p
-      c.save(touch: false)
+      u.save(touch: false)
     end
   end
 end
