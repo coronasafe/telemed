@@ -15,5 +15,10 @@ ActiveAdmin.register_page "Dashboard" do
 
     h1 "Panchayats"
     para "Use Panchayats to add more Panchayats"
+
+    h1 "Stats"
+    Consultation.group('created_at::date').count.each do |a|
+      para "#{a.first}, #{a.last}"
+    end
   end
 end

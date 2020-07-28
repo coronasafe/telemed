@@ -34,6 +34,7 @@ module Contacts
 
     def scope_by_date
       c_ids = user_scope.where(created_at: date_window, district_id: current_user.panchayat.district.id).group_by(&:contact_id).map { |a| a.second.pluck(:id).sort.last }
+
       assigned_to_me == 'Assigned to Me' ? user_scope.where(id: c_ids, created_at: date_window, doctor_id: current_user.id) : user_scope.where(id: c_ids, created_at: date_window)
     end
 

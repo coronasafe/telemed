@@ -126,7 +126,7 @@
   </div>
 </div>
 <div class="mt-4 flex flex-col">
-  <div class="-my-2 py-2 overflow-x-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+  <div class="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
     <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
       <table class="min-w-full">
         <thead>
@@ -138,13 +138,7 @@
               Name
             </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Consultation
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Requested
-            </th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Category
             </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Status
@@ -161,12 +155,15 @@
           <tr class="hover:text-gray-100 cursor-pointer">
             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
               <%= link_to "#{c.contact.uid}", consultation_path(c) %>
+              <div>
+              <%= c.consultation_type %>
+              </div>
             </td>
             <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500 text-blue-600">
               <%= link_to c.contact.name, contact_path(c.contact), class: 'mr-2 font-medium' %>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-              <%= c.consultation_type %>
+              <div class="text-black">
+                <%= c.category&.titleize %>
+              </div>
             </td>
             <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
               <div><%= c&.source&.titleize %></div>
@@ -174,10 +171,7 @@
               <div class="text-sm"><%= c.created_at.strftime("%m/%d/%Y at %I:%M%p") %></div>
             </td>
             <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-              <%= c.category&.titleize %>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 text-gray-500">
-              <div class="flex flex-col items-start">
+              <div class="flex flex-col items-center">
                 <div class="<%= "bg-#{c.action&.color}-200 inline-flex mx-auto px-2 rounded font-semibold mt-2" %>">
                   <%= c.action&.name %>
                 </div>
