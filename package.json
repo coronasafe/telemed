@@ -8,7 +8,7 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "4.2.2",
+    "@rails/webpacker": "5.2.0",
     "@tailwindcss/custom-forms": "^0.2.1",
     "@tailwindcss/ui": "^0.3.0",
     "bs-webapi": "^0.16.1",
