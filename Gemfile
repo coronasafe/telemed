@@ -41,7 +41,7 @@ gem 'rollbar'
 gem 'rqrcode', '~> 1.1.2'
 
 # Active Admin
-gem 'activeadmin', '~> 2.7.0'
+gem 'activeadmin', '~> 2.8.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
